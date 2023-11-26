@@ -1,0 +1,111 @@
+C51 COMPILER V9.60.0.0   DS1302                                                            12/10/2021 21:29:59 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DS1302
+OBJECT MODULE PLACED IN .\Objects\ds1302.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE ds1302.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\ds1302.lst) TABS(2) OBJECT(.\Objects\ds1302.obj)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include <intrins.h>
+   3          #include <stdio.h>
+   4          #include "spi.h"
+   5          
+   6          sbit led = P0^0;
+   7          u8 DisplayData[8] = {0xff,0xff,0x40,0xff,0xff,0x40,0xff,0xff};
+   8          u8 code smgduan[16]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+   9                    0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};//显示0~F的值
+  10          sbit LSA = P1^3;
+  11          sbit LSB = P1^4;
+  12          sbit LSC = P1^5;
+  13          void delay(unsigned int t)
+  14          {
+  15   1        while(t--)
+  16   1          _nop_();
+  17   1      }
+  18          void DigDisplay()
+  19          {
+  20   1        u8 i;
+  21   1        for(i=0;i<8;i++)
+  22   1        {
+  23   2          switch(i)  //位选，选择点亮的数码管，
+  24   2          {
+  25   3            case(0):
+  26   3              LSA=0;LSB=0;LSC=0; break;//显示第0位
+  27   3            case(1):
+  28   3              LSA=1;LSB=0;LSC=0; break;//显示第1位
+  29   3            case(2):
+  30   3              LSA=0;LSB=1;LSC=0; break;//显示第2位
+  31   3            case(3):
+  32   3              LSA=1;LSB=1;LSC=0; break;//显示第3位
+  33   3            case(4):
+  34   3              LSA=0;LSB=0;LSC=1; break;//显示第4位
+  35   3            case(5):
+  36   3              LSA=1;LSB=0;LSC=1; break;//显示第5位
+  37   3            case(6):
+  38   3              LSA=0;LSB=1;LSC=1; break;//显示第6位
+  39   3            case(7):
+  40   3              LSA=1;LSB=1;LSC=1; break;//显示第7位  
+  41   3          }
+  42   2          P0=DisplayData[i];//发送段码
+  43   2          delay(100); //间隔一段时间扫描  
+  44   2          P0=0x00;//消隐
+  45   2        }
+  46   1      }
+  47          void Process()
+  48          {
+  49   1        u8 i,sh,sl,s;
+  50   1        
+  51   1        i = spir8bit(0x81);
+  52   1        sh = (i&0x70)>>4;
+  53   1        sl = i&0x0f;
+  54   1        s = sh*10+sl;
+C51 COMPILER V9.60.0.0   DS1302                                                            12/10/2021 21:29:59 PAGE 2   
+
+  55   1        DisplayData[6] = smgduan[(s/10)%10];
+  56   1        DisplayData[7] = smgduan[s%10];
+  57   1        
+  58   1        i = spir8bit(0x83);
+  59   1        sh = (i&0x70)>>4;
+  60   1        sl = i&0x0f;
+  61   1        s = sh*10+sl;
+  62   1        DisplayData[3] = smgduan[(s/10)%10];
+  63   1        DisplayData[4] = smgduan[s%10];
+  64   1        i = spir8bit(0x85);
+  65   1        sh = (i&0x70)>>4;
+  66   1        sl = i&0x0f;
+  67   1        s = sh*10+sl;
+  68   1        DisplayData[0] = smgduan[(s/10)%10];
+  69   1        DisplayData[1] = smgduan[s%10];
+  70   1        
+  71   1      }
+  72          
+  73          void main(void)
+  74          { 
+  75   1        
+  76   1      //  spiw8bit(0x80,0x00);
+  77   1        spiw8bit(0x09,0x00);
+  78   1        spiw8bit(0x0A,0x0F);
+  79   1        spiw8bit(0x08,0xff);
+  80   1        
+  81   1        while(1)
+  82   1        {
+  83   2          
+  84   2        }
+  85   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    301    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

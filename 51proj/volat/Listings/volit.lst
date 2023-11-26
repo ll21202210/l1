@@ -1,0 +1,81 @@
+C51 COMPILER V9.60.0.0   VOLIT                                                             11/16/2021 20:58:39 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE VOLIT
+OBJECT MODULE PLACED IN .\Objects\volit.obj
+COMPILER INVOKED BY: C:\Keil_v5c51\C51\BIN\C51.EXE volit.c OPTIMIZE(8,SPEED) BROWSE DEFINE(__aa_) DEBUG OBJECTEXTEND PRI
+                    -NT(.\Listings\volit.lst) TABS(2) OBJECT(.\Objects\volit.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          #define u16 unsigned int
+   5          #define u8 unsigned char
+   6          void delay(u8 time);
+   7          sbit beep = P1^0;
+   8          u8 smgd[17]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+   9                    0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};//ÏÔÊ¾0~FµÄÖµ
+  10          void main(void)
+  11          {
+  12   1        u16 i = 0, j = 0, beepon = 0;
+  13   1        while(1)
+  14   1        {
+  15   2          P0 = ~smgd[j];
+  16   2          i++;
+  17   2          if(i == 2000)
+  18   2          {
+  19   3            i = 0;
+  20   3          }
+  21   2          if(i%600 == 0)
+  22   2          {
+  23   3            j++;
+  24   3            if(j == 17)
+  25   3            {
+  26   4              j = 0;
+  27   4            }
+  28   3          }
+  29   2          
+  30   2          if(j>= 10)
+  31   2            beepon = 1;
+  32   2          else
+  33   2            beepon = 0;
+  34   2          if(beepon)
+  35   2          {
+  36   3            beep = 0;
+  37   3            delay(5);
+  38   3            beep = 1;
+  39   3            delay(5);
+  40   3          }else
+  41   2          delay(10);
+  42   2        }
+  43   1        
+  44   1        
+  45   1        
+  46   1      }
+  47          
+  48          void delay(u8 time)
+  49          {
+  50   1        while(time--)
+  51   1          _nop_();
+  52   1      }
+  53          
+  54          
+C51 COMPILER V9.60.0.0   VOLIT                                                             11/16/2021 20:58:39 PAGE 2   
+
+  55          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    139    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     17       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

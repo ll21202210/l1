@@ -1,0 +1,170 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/20/2021  14:30:48  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5_C51\C51\BIN\BL51.EXE .\Objects\duoji.obj TO .\Objects\duoji PRINT (.\Listings\duoji.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\duoji.obj (DUOJI)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\duoji (DUOJI)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?DUOJI
+            DATA    000CH     0001H     UNIT         _DATA_GROUP_
+            IDATA   000DH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     004BH     UNIT         ?PR?MAIN?DUOJI
+            CODE    08D7H     0040H     UNIT         ?PR?T0INT?DUOJI
+            CODE    0917H     0012H     UNIT         ?PR?_DELAY?DUOJI
+            CODE    0929H     0010H     UNIT         ?PR?TIMERINIT?DUOJI
+            CODE    0939H     000DH     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\duoji (DUOJI)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?DUOJI
+  +--> ?C_INITSEG
+
+?PR?MAIN?DUOJI                 000CH    0001H
+  +--> ?PR?TIMERINIT?DUOJI
+  +--> ?PR?_DELAY?DUOJI
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\duoji (DUOJI)
+
+  VALUE           TYPE          NAME
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/20/2021  14:30:48  PAGE 2
+
+
+  ----------------------------------
+
+  -------         MODULE        DUOJI
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  B:0090H.0       PUBLIC        out1
+  B:0090H.1       PUBLIC        out2
+  B:0090H.2       PUBLIC        out3
+  D:00A8H         PUBLIC        IE
+  C:091BH         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:0929H         PUBLIC        TimerInit
+  C:088CH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  C:08D7H         PUBLIC        T0int
+  B:0088H.4       PUBLIC        TR0
+  D:00C8H         PUBLIC        T2CON
+  D:0008H         PUBLIC        i
+  D:0009H         PUBLIC        rad1
+  D:000AH         PUBLIC        rad2
+  D:000BH         PUBLIC        rad3
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:000CH         SYMBOL        i
+  -------         ENDDO         
+  C:088CH         LINE#         17
+  C:088CH         LINE#         18
+  C:088CH         LINE#         21
+  C:088FH         LINE#         22
+  C:088FH         LINE#         23
+  C:088FH         LINE#         24
+  C:089DH         LINE#         25
+  C:089DH         LINE#         26
+  C:08A0H         LINE#         27
+  C:08A3H         LINE#         28
+  C:08A7H         LINE#         29
+  C:08B5H         LINE#         30
+  C:08B5H         LINE#         31
+  C:08B8H         LINE#         32
+  C:08BBH         LINE#         33
+  C:08BFH         LINE#         34
+  C:08CDH         LINE#         35
+  C:08CDH         LINE#         36
+  C:08D0H         LINE#         37
+  C:08D3H         LINE#         38
+  -------         ENDPROC       MAIN
+  C:0917H         SYMBOL        L?0027
+  -------         PROC          L?0026
+  -------         ENDPROC       L?0026
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/20/2021  14:30:48  PAGE 3
+
+
+  C:0917H         SYMBOL        L?0027
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  C:091BH         LINE#         66
+  C:091BH         LINE#         67
+  C:091BH         LINE#         68
+  C:0925H         LINE#         69
+  C:0928H         LINE#         70
+  -------         ENDPROC       _DELAY
+  -------         PROC          T0INT
+  C:08D7H         LINE#         71
+  C:08DBH         LINE#         73
+  C:08DEH         LINE#         74
+  C:08E1H         LINE#         75
+  C:08E3H         LINE#         76
+  C:08E9H         LINE#         77
+  C:08EBH         LINE#         78
+  C:08F2H         LINE#         79
+  C:08F6H         LINE#         81
+  C:08F8H         LINE#         82
+  C:08FFH         LINE#         83
+  C:0903H         LINE#         85
+  C:0905H         LINE#         86
+  C:090CH         LINE#         87
+  C:0910H         LINE#         89
+  C:0912H         LINE#         90
+  -------         ENDPROC       T0INT
+  -------         PROC          TIMERINIT
+  C:0929H         LINE#         91
+  C:0929H         LINE#         92
+  C:0929H         LINE#         93
+  C:092CH         LINE#         94
+  C:092FH         LINE#         95
+  C:0932H         LINE#         96
+  C:0934H         LINE#         97
+  C:0936H         LINE#         98
+  C:0938H         LINE#         99
+  -------         ENDPROC       TIMERINIT
+  -------         ENDMOD        DUOJI
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00BCH BYTE ( 9%) *
+******************************************************************************
+
+Program Size: data=14.0 xdata=0 code=332
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

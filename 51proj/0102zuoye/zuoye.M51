@@ -1,0 +1,234 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/04/2022  11:45:12  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V4_C51\C51\BIN\BL51.EXE zy.obj TO zuoye RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  zy.obj (ZY)
+  C:\KEIL_V4_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V4_C51\C51\LIB\C51S.LIB (?C?UIDIV)
+  C:\KEIL_V4_C51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  zuoye (ZY)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000BH     UNIT         ?DT?ZY
+            IDATA   0013H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0006H     UNIT         ?PR?DELAY500US?ZY
+                    0009H     0002H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     00E7H     UNIT         ?PR?PROC?ZY
+            CODE    00F5H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0181H     0069H     UNIT         ?PR?DISPLAY?ZY
+            CODE    01EAH     0055H     UNIT         ?C?LIB_CODE
+            CODE    023FH     0023H     UNIT         ?PR?INT1?ZY
+            CODE    0262H     001BH     UNIT         ?PR?BEEPC?ZY
+            CODE    027DH     0012H     UNIT         ?C_INITSEG
+            CODE    028FH     0010H     UNIT         ?PR?TIMERINIT?ZY
+            CODE    029FH     0010H     UNIT         ?CO?ZY
+            CODE    02AFH     000EH     UNIT         ?PR?MAIN?ZY
+
+
+
+OVERLAY MAP OF MODULE:   zuoye (ZY)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?ZY
+  +--> ?C_INITSEG
+
+?PR?MAIN?ZY
+  +--> ?PR?TIMERINIT?ZY
+  +--> ?PR?PROC?ZY
+  +--> ?PR?DISPLAY?ZY
+  +--> ?PR?BEEPC?ZY
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2022  11:45:12  PAGE 2
+
+
+
+?PR?PROC?ZY
+  +--> ?CO?ZY
+
+?PR?DISPLAY?ZY
+  +--> ?PR?DELAY500US?ZY
+
+
+
+SYMBOL TABLE OF MODULE:  zuoye (ZY)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ZY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0008H         PUBLIC        ddata
+  D:0090H         PUBLIC        P1
+  C:0262H         PUBLIC        beepc
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:028FH         PUBLIC        TimerInit
+  B:00A0H.3       PUBLIC        beep
+  C:02AFH         PUBLIC        main
+  D:0010H         PUBLIC        time
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:000EH         PUBLIC        proc
+  D:0012H         PUBLIC        cout
+  B:00A0H.0       PUBLIC        lsa
+  B:00A0H.1       PUBLIC        lsb
+  B:00A0H.2       PUBLIC        lsc
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  C:0181H         PUBLIC        Display
+  D:00C8H         PUBLIC        T2CON
+  C:0003H         PUBLIC        Delay500us
+  C:029FH         PUBLIC        smgduan
+  D:00D0H         PUBLIC        PSW
+  C:023FH         PUBLIC        int1
+  -------         PROC          DELAY500US
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:0003H         LINE#         18
+  C:0003H         LINE#         19
+  C:0003H         LINE#         21
+  C:0004H         LINE#         22
+  C:0006H         LINE#         23
+  C:0008H         LINE#         24
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2022  11:45:12  PAGE 3
+
+
+  -------         ENDPROC       DELAY500US
+  -------         PROC          TIMERINIT
+  C:028FH         LINE#         26
+  C:028FH         LINE#         27
+  C:028FH         LINE#         28
+  C:0292H         LINE#         29
+  C:0295H         LINE#         30
+  C:0298H         LINE#         31
+  C:029AH         LINE#         32
+  C:029CH         LINE#         33
+  C:029EH         LINE#         35
+  -------         ENDPROC       TIMERINIT
+  -------         PROC          PROC
+  C:000EH         LINE#         36
+  C:000EH         LINE#         37
+  C:000EH         LINE#         39
+  C:0044H         LINE#         40
+  C:005DH         LINE#         42
+  C:0093H         LINE#         43
+  C:00ACH         LINE#         45
+  C:00DBH         LINE#         46
+  C:00F4H         LINE#         48
+  -------         ENDPROC       PROC
+  -------         PROC          DISPLAY
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0181H         LINE#         49
+  C:0181H         LINE#         50
+  C:0181H         LINE#         52
+  C:0183H         LINE#         53
+  C:0183H         LINE#         54
+  C:01A8H         LINE#         55
+  C:01A8H         LINE#         56
+  C:01A8H         LINE#         57
+  C:01AAH         LINE#         58
+  C:01ACH         LINE#         59
+  C:01ACH         LINE#         60
+  C:01B2H         LINE#         61
+  C:01B4H         LINE#         62
+  C:01B4H         LINE#         63
+  C:01B6H         LINE#         64
+  C:01B8H         LINE#         65
+  C:01B8H         LINE#         66
+  C:01BEH         LINE#         67
+  C:01C0H         LINE#         68
+  C:01C0H         LINE#         69
+  C:01C2H         LINE#         70
+  C:01C4H         LINE#         71
+  C:01C4H         LINE#         72
+  C:01CAH         LINE#         73
+  C:01CCH         LINE#         74
+  C:01CCH         LINE#         75
+  C:01CEH         LINE#         76
+  C:01D0H         LINE#         77
+  C:01D0H         LINE#         78
+  C:01D6H         LINE#         79
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2022  11:45:12  PAGE 4
+
+
+  C:01D6H         LINE#         80
+  C:01D6H         LINE#         81
+  C:01DDH         LINE#         82
+  C:01E0H         LINE#         83
+  C:01E3H         LINE#         84
+  C:01E9H         LINE#         86
+  -------         ENDPROC       DISPLAY
+  -------         PROC          BEEPC
+  C:0262H         LINE#         87
+  C:0262H         LINE#         88
+  C:0262H         LINE#         89
+  C:0277H         LINE#         90
+  C:0277H         LINE#         91
+  C:0279H         LINE#         92
+  C:027AH         LINE#         94
+  C:027AH         LINE#         95
+  C:027CH         LINE#         96
+  C:027CH         LINE#         97
+  -------         ENDPROC       BEEPC
+  -------         PROC          MAIN
+  C:02AFH         LINE#         99
+  C:02AFH         LINE#         100
+  C:02AFH         LINE#         101
+  C:02B2H         LINE#         102
+  C:02B2H         LINE#         103
+  C:02B2H         LINE#         105
+  C:02B5H         LINE#         106
+  C:02B8H         LINE#         107
+  C:02BBH         LINE#         108
+  -------         ENDPROC       MAIN
+  -------         PROC          INT1
+  C:023FH         LINE#         111
+  C:0243H         LINE#         113
+  C:0246H         LINE#         114
+  C:0249H         LINE#         115
+  C:024BH         LINE#         116
+  C:0252H         LINE#         117
+  C:0252H         LINE#         118
+  C:0255H         LINE#         119
+  C:025DH         LINE#         120
+  C:025DH         LINE#         121
+  -------         ENDPROC       INT1
+  -------         ENDMOD        ZY
+
+  -------         MODULE        ?C?UIDIV
+  C:01EAH         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+Program Size: data=20.0 xdata=0 code=699
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

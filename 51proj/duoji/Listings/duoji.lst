@@ -1,0 +1,125 @@
+C51 COMPILER V9.60.0.0   DUOJI                                                             12/20/2021 14:30:48 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DUOJI
+OBJECT MODULE PLACED IN .\Objects\duoji.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE duoji.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\duoji.lst) TABS(2) OBJECT(.\Objects\duoji.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          #define u8 unsigned char
+   5          #define u16 unsigned int 
+   6            
+   7          sbit out1 = P1^0;
+   8          sbit out2 = P1^1;
+   9          sbit out3 = P1^2;
+  10          
+  11          u8 rad1 = 14,rad2 = 14,rad3 = 14;
+  12          u8 i = 0;
+  13          
+  14          void delay(u16 time);
+  15          void TimerInit(void);
+  16          
+  17          void main(void)
+  18          {
+  19   1      //  u8 temp = 5;
+  20   1        u8 i;
+  21   1        TimerInit();
+  22   1        while(1)
+  23   1        {
+  24   2          for(i = 5; i<= 25; i++)
+  25   2          {
+  26   3            rad1 = i;
+  27   3            delay(10000);
+  28   3          }
+  29   2          for(i = 5; i<= 25; i++)
+  30   2          {
+  31   3            rad2 = i;
+  32   3            delay(10000);
+  33   3          }
+  34   2          for(i = 5; i<= 25; i++)
+  35   2          {
+  36   3            rad3 = i;
+  37   3            delay(10000);
+  38   3          }
+  39   2      //    rad1 = 20;
+  40   2      //    delay(50000);
+  41   2      //    rad1 = 15;
+  42   2      //    delay(50000);
+  43   2      //    rad2 = 20;
+  44   2      //    delay(50000);
+  45   2      //    rad2 = 15;
+  46   2      //    delay(50000);
+  47   2      //    rad3 = 20;
+  48   2      //    delay(50000);
+  49   2      //    rad3 = 15;
+  50   2      //    delay(50000);
+  51   2      //    if(rad != temp)
+  52   2      //    {
+  53   2      //      if(rad < temp)
+  54   2      //        rad++;
+C51 COMPILER V9.60.0.0   DUOJI                                                             12/20/2021 14:30:48 PAGE 2   
+
+  55   2      //      else
+  56   2      //        rad--;
+  57   2      //    }
+  58   2      //    delay(10000);
+  59   2      //    if(rad == 23)
+  60   2      //      temp = 5;
+  61   2      //    if(rad == 5)
+  62   2      //      temp = 23;
+  63   2        }
+  64   1        
+  65   1      }
+  66          void delay(u16 time)
+  67          {
+  68   1        while(time--)
+  69   1          _nop_();
+  70   1      }
+  71          void T0int(void) interrupt 1
+  72          {
+  73   1        TH0 = 0xff; //0.1ms
+  74   1        TL0 = 0x9c;
+  75   1        i++;
+  76   1        if(i == 200) //20ms
+  77   1          i = 0;
+  78   1        if(rad1 > i)
+  79   1          out1 = 1;
+  80   1        else
+  81   1          out1 = 0;
+  82   1        if(rad2 > i)
+  83   1          out2 = 1;
+  84   1        else
+  85   1          out2 = 0;
+  86   1        if(rad3 > i)
+  87   1          out3 = 0xff;
+  88   1        else
+  89   1          out3 = 0;
+  90   1      }
+  91          void TimerInit(void)
+  92          {
+  93   1        TMOD = 0x01;
+  94   1        TH0 = 0xff;
+  95   1        TL0 = 0x9c;
+  96   1        EA = 1;
+  97   1        ET0 = 1;
+  98   1        TR0 = 1;
+  99   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    173    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

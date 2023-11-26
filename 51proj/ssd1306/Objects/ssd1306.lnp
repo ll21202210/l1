@@ -1,0 +1,4 @@
+".\Objects\ssd1306.obj",
+".\Objects\iic.obj" 
+TO ".\Objects\ssd1306" 
+PRINT(".\Listings\ssd1306.m51") RAMSIZE(256) 

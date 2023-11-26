@@ -1,0 +1,141 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              12/11/2021 19:27:37 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include "max7219.h"
+   4          
+   5          #define time 10000
+   6          
+   7          //u8 code sduan[16] = {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};  /
+             -/π≤“ı
+   8          u8 code ddat[10][8] = {{0x18,0x18,0x3C,0x5A,0xD9,0xD9,0x18,0x18},
+   9          {0x00,0x18,0x3C,0x5A,0x5A,0x6A,0x68,0x28},
+  10          {0x00,0x18,0x3C,0x5A,0x9A,0x2E,0x2C,0x28},
+  11          {0x18,0x18,0x3C,0x5A,0x9B,0x1B,0x18,0x18},//4
+  12          {0x00,0x18,0x3C,0x5A,0x9A,0x16,0x16,0x14},
+  13          {0x00,0x18,0x3C,0x5A,0x59,0x74,0x34,0x14},
+  14          {0x18,0x18,0x3C,0x5A,0xD9,0xD8,0x18,0x18},
+  15          {0x08,0x08,0x3E,0x4D,0x76,0x74,0x14,0x00},
+  16          };
+  17          void Max7219Init(void)
+  18          {
+  19   1        max7219w(0x09, 0x00);
+  20   1        max7219w(0x0b, 0x07);
+  21   1        max7219w(0x0a, 10); //0 - 15 ¡¡∂»
+  22   1        max7219w(0x0c, 0x01);
+  23   1      }
+  24          void Display(u8 s)
+  25          {
+  26   1        u8 i;
+  27   1        for(i = 1; i < 9; i++)
+  28   1        {
+  29   2          max7219w(i, ddat[s][i-1]);
+  30   2        }
+  31   1      }
+  32          void delay(u16 i)
+  33          {
+  34   1        while(i--)
+  35   1          _nop_();
+  36   1      }
+  37          void caiDisplay(void)
+  38          {
+  39   1          Display(0);
+  40   1          delay(time);
+  41   1          Display(1);
+  42   1          delay(time);
+  43   1          Display(2);
+  44   1          delay(time);
+  45   1          Display(3);
+  46   1          delay(time);
+  47   1          Display(4);
+  48   1          delay(time);
+  49   1          Display(5);
+  50   1          delay(time);
+  51   1          Display(0);
+  52   1          delay(time);
+  53   1      }
+  54          void clear()
+C51 COMPILER V9.60.0.0   MAIN                                                              12/11/2021 19:27:37 PAGE 2   
+
+  55          {
+  56   1        u8 y;
+  57   1        for(y = 1; y<9; y++)
+  58   1          {
+  59   2            max7219w(y, 0x00);
+  60   2          }
+  61   1      }
+  62          void donghua()
+  63          {
+  64   1        u8 x,y,t,n;
+  65   1        for(y = 1; y<9; y++)
+  66   1          {
+  67   2            max7219w(y, 0x00);
+  68   2          }
+  69   1        for(x = 0; x<4 ; x++)
+  70   1        {
+  71   2          t = 0x80;
+  72   2          n = 0x01;
+  73   2          
+  74   2          for(y = 0; y<8; y++)
+  75   2          {
+  76   3            
+  77   3            max7219w(x+1, t);
+  78   3            t = t/2 + 0x80;
+  79   3            max7219w(8-x, n);
+  80   3            n = n*2 + 1;
+  81   3            delay(1000);
+  82   3          }
+  83   2        }
+  84   1        for(x = 0; x<4 ; x++)
+  85   1        {
+  86   2          t = 0xff;
+  87   2          n = 0xff;
+  88   2          for(y = 0; y<8; y++)
+  89   2          {
+  90   3            t = t<<1;
+  91   3            max7219w(4-x, t);
+  92   3            n = n>>1;
+  93   3            max7219w(5+x, n);
+  94   3            
+  95   3            delay(1000);
+  96   3          }
+  97   2        }
+  98   1      }
+  99          void main(void)
+ 100          {
+ 101   1        
+ 102   1        delay(1000);
+ 103   1        Max7219Init();
+ 104   1        
+ 105   1        while(1)
+ 106   1          {
+ 107   2            donghua();
+ 108   2            caiDisplay();
+ 109   2            caiDisplay();
+ 110   2            clear();
+ 111   2            delay(50000);
+ 112   2          }
+ 113   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.60.0.0   MAIN                                                              12/11/2021 19:27:37 PAGE 3   
+
+   CODE SIZE        =    410    ----
+   CONSTANT SIZE    =     80    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

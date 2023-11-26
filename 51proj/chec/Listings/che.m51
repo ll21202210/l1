@@ -1,0 +1,228 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    10/14/2022  19:20:32  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5_C51\C51\BIN\BL51.EXE .\Objects\main.obj TO .\Objects\che PRINT (.\Listings\che.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\che (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         ?DT?MAIN
+            IDATA   000EH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0008H     UNIT         ?PR?MAIN?MAIN
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    009AH     0056H     UNIT         ?PR?SCAN?MAIN
+            CODE    00F0H     003AH     UNIT         ?PR?_SET_MOTO?MAIN
+            CODE    012AH     0035H     UNIT         ?PR?TRQ_T0?MAIN
+            CODE    015FH     001CH     UNIT         ?PR?SYSINIT?MAIN
+            CODE    017BH     000DH     UNIT         ?C_INITSEG
+            CODE    0188H     000BH     UNIT         ?PR?_DELAY?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\che (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?SYSINIT?MAIN
+  +--> ?PR?SCAN?MAIN
+
+?PR?SCAN?MAIN
+  +--> ?PR?_SET_MOTO?MAIN
+  +--> ?PR?_DELAY?MAIN
+
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/14/2022  19:20:32  PAGE 2
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\che (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  B:0080H.4       PUBLIC        ma1
+  D:0080H         PUBLIC        P0
+  B:0080H.2       PUBLIC        mb1
+  B:0080H.5       PUBLIC        ma2
+  D:0090H         PUBLIC        P1
+  B:0080H.3       PUBLIC        mb2
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0188H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:0003H         PUBLIC        main
+  C:009AH         PUBLIC        scan
+  D:0008H         PUBLIC        count
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:0080H.1       PUBLIC        pwma
+  B:0080H.0       PUBLIC        pwmb
+  B:00A0H.0       PUBLIC        inl
+  D:0009H         PUBLIC        inl_state
+  B:00A8H.1       PUBLIC        ET0
+  B:00A0H.2       PUBLIC        inr
+  D:008CH         PUBLIC        TH0
+  D:000AH         PUBLIC        inr_state
+  C:00F8H         PUBLIC        _Set_moto
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  C:015FH         PUBLIC        SysInit
+  C:012AH         PUBLIC        TRQ_T0
+  D:000BH         PUBLIC        pwm_dutya
+  D:000CH         PUBLIC        pwm_dutyb
+  D:00C8H         PUBLIC        T2CON
+  D:000DH         PUBLIC        tim_cnt
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0003H         LINE#         22
+  C:0003H         LINE#         23
+  C:0003H         LINE#         24
+  C:0006H         LINE#         27
+  C:0006H         LINE#         28
+  C:0006H         LINE#         29
+  C:0009H         LINE#         31
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  C:0188H         LINE#         33
+  C:0188H         LINE#         34
+  C:0188H         LINE#         35
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/14/2022  19:20:32  PAGE 3
+
+
+  C:0192H         LINE#         36
+  -------         ENDPROC       _DELAY
+  -------         PROC          SYSINIT
+  C:015FH         LINE#         37
+  C:015FH         LINE#         38
+  C:015FH         LINE#         39
+  C:0162H         LINE#         40
+  C:0165H         LINE#         41
+  C:0168H         LINE#         42
+  C:016AH         LINE#         43
+  C:016CH         LINE#         44
+  C:016EH         LINE#         45
+  C:0174H         LINE#         46
+  C:017AH         LINE#         47
+  -------         ENDPROC       SYSINIT
+  -------         PROC          SCAN
+  C:009AH         LINE#         48
+  C:009AH         LINE#         49
+  C:009AH         LINE#         50
+  C:00A0H         LINE#         51
+  C:00A0H         LINE#         52
+  C:00A4H         LINE#         53
+  C:00A4H         LINE#         54
+  C:00ADH         LINE#         55
+  C:00AFH         LINE#         56
+  C:00AFH         LINE#         57
+  C:00B1H         LINE#         58
+  C:00B7H         LINE#         59
+  C:00B7H         LINE#         60
+  C:00B7H         LINE#         61
+  C:00BAH         LINE#         62
+  C:00BAH         LINE#         63
+  C:00BCH         LINE#         64
+  C:00C2H         LINE#         65
+  C:00C2H         LINE#         66
+  C:00C2H         LINE#         67
+  C:00C5H         LINE#         68
+  C:00CCH         LINE#         69
+  C:00CCH         LINE#         71
+  C:00CCH         LINE#         72
+  C:00D0H         LINE#         73
+  C:00D0H         LINE#         75
+  C:00D2H         LINE#         76
+  C:00D5H         LINE#         77
+  C:00D5H         LINE#         78
+  C:00DBH         LINE#         79
+  C:00DDH         LINE#         80
+  C:00E2H         LINE#         81
+  C:00E2H         LINE#         82
+  C:00E6H         LINE#         83
+  C:00E8H         LINE#         85
+  C:00E8H         LINE#         86
+  C:00EFH         LINE#         87
+  C:00EFH         LINE#         88
+  -------         ENDPROC       SCAN
+  -------         PROC          L?0040
+  -------         ENDPROC       L?0040
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  10/14/2022  19:20:32  PAGE 4
+
+
+  -------         PROC          _SET_MOTO
+  D:0007H         SYMBOL        dutya
+  D:0005H         SYMBOL        dutyb
+  D:0003H         SYMBOL        runmode
+  C:00F8H         LINE#         91
+  C:00F8H         LINE#         92
+  C:00F8H         LINE#         93
+  C:0102H         LINE#         94
+  C:0104H         LINE#         95
+  C:010EH         LINE#         96
+  C:0110H         LINE#         97
+  C:0118H         LINE#         98
+  C:0118H         LINE#         99
+  C:0118H         LINE#         100
+  C:011AH         LINE#         101
+  C:011CH         LINE#         102
+  C:011EH         LINE#         103
+  C:0120H         LINE#         104
+  C:0121H         LINE#         105
+  C:0121H         LINE#         106
+  C:0123H         LINE#         107
+  C:0125H         LINE#         108
+  C:0127H         LINE#         109
+  C:0129H         LINE#         110
+  C:0129H         LINE#         111
+  C:0129H         LINE#         112
+  -------         ENDPROC       _SET_MOTO
+  -------         PROC          TRQ_T0
+  C:012AH         LINE#         113
+  C:012EH         LINE#         115
+  C:0139H         LINE#         116
+  C:013DH         LINE#         118
+  C:0140H         LINE#         119
+  C:0147H         LINE#         120
+  C:014BH         LINE#         122
+  C:014DH         LINE#         123
+  C:0154H         LINE#         124
+  C:0158H         LINE#         126
+  C:015AH         LINE#         128
+  -------         ENDPROC       TRQ_T0
+  -------         ENDMOD        MAIN
+
+Program Size: data=15.0 xdata=0 code=403
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

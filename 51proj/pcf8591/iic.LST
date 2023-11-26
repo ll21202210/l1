@@ -1,0 +1,147 @@
+C51 COMPILER V9.60.0.0   IIC                                                               01/06/2022 18:27:28 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE IIC
+OBJECT MODULE PLACED IN iic.OBJ
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE iic.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include "iic.h"
+   4          void Delay5us()   //@12.000MHz
+   5          {
+   6   1        unsigned char i;
+   7   1      
+   8   1        i = 12;
+   9   1        while (--i);
+  10   1      }
+  11          void iicstart(void)
+  12          {
+  13   1        dio = 1;
+  14   1        clk = 1;
+  15   1        Delay5us();
+  16   1        dio = 0;
+  17   1        Delay5us();
+  18   1      }
+  19          void iicstop(void)
+  20          {
+  21   1        
+  22   1        dio = 0;
+  23   1        clk = 1;
+  24   1        Delay5us();
+  25   1        dio = 1;
+  26   1        Delay5us();
+  27   1      }
+  28          void iics8bit(u8 da)
+  29          {
+  30   1        u8 i;
+  31   1        clk = 0;
+  32   1        Delay5us();
+  33   1        for(i = 0; i<8; i++)
+  34   1        {
+  35   2          dio = da>>7;
+  36   2          da = da<<1;
+  37   2          Delay5us();
+  38   2          clk = 1;
+  39   2          Delay5us();
+  40   2          clk = 0;
+  41   2          Delay5us();
+  42   2        }
+  43   1      }
+  44          void iicresp(u8 i)
+  45          {
+  46   1        if(i)
+  47   1          dio = 1;
+  48   1        else
+  49   1          dio = 0;
+  50   1        Delay5us();
+  51   1        clk = 1;
+  52   1        Delay5us();
+  53   1        clk = 0;
+  54   1        Delay5us();
+  55   1      }
+C51 COMPILER V9.60.0.0   IIC                                                               01/06/2022 18:27:28 PAGE 2   
+
+  56          
+  57          u8 iicread8bit(void)
+  58          {
+  59   1        u8 dat,i;
+  60   1        clk = 0;
+  61   1        Delay5us();
+  62   1        dio = 1; //释放
+  63   1        
+  64   1        for(i = 0; i<8; i++)
+  65   1        {
+  66   2          dat = dat<<1;
+  67   2          clk = 1;
+  68   2          Delay5us();
+  69   2          dat |= dio;
+  70   2          Delay5us();
+  71   2          clk = 0;
+  72   2          Delay5us();
+  73   2        }
+  74   1        return dat;
+  75   1      }
+  76          void iicwait(void)
+  77          {
+  78   1        u8 i = 250;
+  79   1        dio = 1;
+  80   1        Delay5us();
+  81   1        clk = 1;
+  82   1        Delay5us();
+  83   1        while(dio && i--)
+  84   1        {
+  85   2          Delay5us();
+  86   2        } //1ms
+  87   1        clk = 0;
+  88   1        Delay5us();
+  89   1      }
+  90          
+  91          void PCF8591sadc(u8 cmd)
+  92          {
+  93   1        iicstart();
+  94   1        iics8bit(0x90);
+  95   1        iicwait();
+  96   1        iics8bit(cmd);
+  97   1        iicwait();
+  98   1        iicstop();
+  99   1      }
+ 100          u8 PCF8591radc()
+ 101          {
+ 102   1        u8 dat;
+ 103   1        iicstart();
+ 104   1        iics8bit(0x91);
+ 105   1        iicwait();
+ 106   1        dat = iicread8bit();
+ 107   1        iicstop();
+ 108   1        return dat;
+ 109   1      }
+ 110          void PCF8591sdac(u8 cmd,u8 dat)
+ 111          {
+ 112   1        iicstart();
+ 113   1        iics8bit(0x90);
+ 114   1        iicwait();
+ 115   1        iics8bit(cmd);
+ 116   1        iicwait();
+ 117   1        iics8bit(dat);
+C51 COMPILER V9.60.0.0   IIC                                                               01/06/2022 18:27:28 PAGE 3   
+
+ 118   1        iicwait();
+ 119   1        iicstop();
+ 120   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    249    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

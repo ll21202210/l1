@@ -1,0 +1,217 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/27/2021  23:41:03  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5_C51\C51\BIN\BL51.EXE .\Objects\zuoye.obj TO .\Objects\zuoye PRINT (.\Listings\zuoye.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\zuoye.obj (ZUOYE)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\zuoye (ZUOYE)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     001AH     UNIT         ?DT?ZUOYE
+            DATA    0022H     0001H     UNIT         _DATA_GROUP_
+            IDATA   0023H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     0079H     UNIT         ?PR?DIGDISPLAY?ZUOYE
+            CODE    0905H     0072H     UNIT         ?PR?KEYDECT?ZUOYE
+            CODE    0977H     0046H     UNIT         ?PR?MAIN?ZUOYE
+            CODE    09BDH     0023H     UNIT         ?C_INITSEG
+            CODE    09E0H     000EH     UNIT         ?PR?_DELAY?ZUOYE
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\zuoye (ZUOYE)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?ZUOYE
+  +--> ?C_INITSEG
+
+?PR?MAIN?ZUOYE                 -----    -----
+  +--> ?PR?KEYDECT?ZUOYE
+  +--> ?PR?DIGDISPLAY?ZUOYE
+  +--> ?PR?_DELAY?ZUOYE
+
+?PR?KEYDECT?ZUOYE              0022H    0001H
+  +--> ?PR?_DELAY?ZUOYE
+
+?PR?DIGDISPLAY?ZUOYE           0022H    0001H
+  +--> ?PR?_DELAY?ZUOYE
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/27/2021  23:41:03  PAGE 2
+
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\zuoye (ZUOYE)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ZUOYE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:09E0H         PUBLIC        _delay
+  D:0008H         PUBLIC        tBri
+  D:00B8H         PUBLIC        IP
+  D:0009H         PUBLIC        Bri
+  C:0977H         PUBLIC        main
+  C:088CH         PUBLIC        DIGDisplay
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:0090H.0       PUBLIC        lsa
+  B:0090H.1       PUBLIC        lsb
+  B:0090H.2       PUBLIC        lsc
+  D:000AH         PUBLIC        DisplayData
+  D:0012H         PUBLIC        smgdata
+  D:00C8H         PUBLIC        T2CON
+  C:0905H         PUBLIC        keydect
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:0007H         SYMBOL        kv
+  -------         ENDDO         
+  C:0977H         LINE#         21
+  C:0977H         LINE#         22
+  C:0977H         LINE#         24
+  C:0977H         LINE#         25
+  C:0977H         LINE#         26
+  C:097AH         LINE#         27
+  C:0984H         LINE#         28
+  C:0986H         LINE#         29
+  C:098AH         LINE#         30
+  C:098AH         LINE#         31
+  C:098DH         LINE#         32
+  C:098EH         LINE#         33
+  C:099FH         LINE#         34
+  C:09ACH         LINE#         35
+  C:09AFH         LINE#         36
+  C:09B1H         LINE#         38
+  C:09B4H         LINE#         50
+  C:09BBH         LINE#         52
+  -------         ENDPROC       MAIN
+  -------         PROC          DIGDISPLAY
+  -------         DO            
+  D:0022H         SYMBOL        i
+  -------         ENDDO         
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/27/2021  23:41:03  PAGE 3
+
+
+  C:088CH         LINE#         55
+  C:088CH         LINE#         56
+  C:088CH         LINE#         58
+  C:089AH         LINE#         59
+  C:089AH         LINE#         60
+  C:08C0H         LINE#         61
+  C:08C0H         LINE#         62
+  C:08C0H         LINE#         63
+  C:08C4H         LINE#         64
+  C:08C4H         LINE#         65
+  C:08C8H         LINE#         66
+  C:08C8H         LINE#         67
+  C:08CCH         LINE#         68
+  C:08CCH         LINE#         69
+  C:08D0H         LINE#         70
+  C:08D0H         LINE#         71
+  C:08D8H         LINE#         72
+  C:08D8H         LINE#         73
+  C:08E0H         LINE#         74
+  C:08E0H         LINE#         75
+  C:08E8H         LINE#         76
+  C:08E8H         LINE#         77
+  C:08EEH         LINE#         78
+  C:08EEH         LINE#         79
+  C:08F6H         LINE#         80
+  C:08FDH         LINE#         81
+  C:0900H         LINE#         82
+  C:0904H         LINE#         83
+  -------         ENDPROC       DIGDISPLAY
+  -------         PROC          KEYDECT
+  -------         DO            
+  D:0022H         SYMBOL        KeyVal
+  -------         ENDDO         
+  C:0905H         LINE#         85
+  C:0905H         LINE#         86
+  C:0905H         LINE#         87
+  C:0908H         LINE#         88
+  C:090BH         LINE#         89
+  C:0912H         LINE#         90
+  C:0912H         LINE#         91
+  C:0919H         LINE#         92
+  C:0920H         LINE#         93
+  C:0920H         LINE#         95
+  C:0932H         LINE#         96
+  C:0932H         LINE#         97
+  C:0932H         LINE#         98
+  C:0937H         LINE#         99
+  C:0937H         LINE#         100
+  C:093CH         LINE#         101
+  C:093CH         LINE#         102
+  C:0941H         LINE#         103
+  C:0941H         LINE#         104
+  C:0946H         LINE#         105
+  C:0946H         LINE#         106
+  C:0949H         LINE#         107
+  C:0949H         LINE#         108
+  C:094CH         LINE#         109
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/27/2021  23:41:03  PAGE 4
+
+
+  C:095FH         LINE#         110
+  C:095FH         LINE#         111
+  C:095FH         LINE#         112
+  C:0963H         LINE#         113
+  C:0963H         LINE#         114
+  C:0967H         LINE#         115
+  C:0967H         LINE#         116
+  C:096FH         LINE#         117
+  C:096FH         LINE#         118
+  C:0971H         LINE#         119
+  C:0971H         LINE#         120
+  C:0974H         LINE#         121
+  C:0974H         LINE#         122
+  C:0974H         LINE#         123
+  C:0974H         LINE#         124
+  C:0976H         LINE#         125
+  -------         ENDPROC       KEYDECT
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        t
+  C:09E0H         LINE#         127
+  C:09E0H         LINE#         128
+  C:09E0H         LINE#         129
+  C:09EAH         LINE#         130
+  C:09EDH         LINE#         131
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        ZUOYE
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0161H BYTE (17%) *
+******************************************************************************
+
+Program Size: data=36.0 xdata=0 code=497
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

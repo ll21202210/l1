@@ -1,0 +1,90 @@
+C51 COMPILER V9.60.0.0   SPI                                                               11/28/2021 01:18:18 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SPI
+OBJECT MODULE PLACED IN .\Objects\spi.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE spi.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\s
+                    -pi.lst) TABS(2) OBJECT(.\Objects\spi.obj)
+
+line level    source
+
+   1          #include "spi.h"
+   2          
+   3          
+   4          void spiw8bit(u8 dat1,u8 dat2) //写两字节
+   5          {
+   6   1        u8 i;
+   7   1        clk = 0;
+   8   1        _nop_();_nop_();
+   9   1        ce = 1;
+  10   1        for(i = 0; i<8; i++)
+  11   1        {
+  12   2          dio = dat1&0x01;
+  13   2          _nop_();_nop_(); 
+  14   2          clk = 1;
+  15   2          _nop_();_nop_(); 
+  16   2          clk = 0;
+  17   2          dat1 >>= 1;
+  18   2          _nop_();_nop_();
+  19   2        }
+  20   1        for(i = 0; i<8; i++)
+  21   1        {
+  22   2          dio = dat2&0x01;
+  23   2          _nop_();_nop_();
+  24   2          clk = 1;
+  25   2          _nop_();_nop_(); 
+  26   2          clk = 0;
+  27   2          dat2 >>= 1;
+  28   2          _nop_();_nop_(); 
+  29   2        }
+  30   1        ce = 0;
+  31   1      }
+  32          
+  33          
+  34          u8 spir8bit(u8 dat1)  //写一字节， 读一字节
+  35          {
+  36   1        u8 i,rd,rdat;
+  37   1        clk = 0;
+  38   1        _nop_();_nop_();
+  39   1        ce = 1;
+  40   1        for(i = 0; i<8; i++)
+  41   1        {
+  42   2          dio = dat1&0x01;
+  43   2          _nop_();_nop_(); 
+  44   2          clk = 1;
+  45   2          _nop_();_nop_();
+  46   2          clk = 0;
+  47   2          dat1 >>= 1;
+  48   2          _nop_();_nop_(); 
+  49   2        }
+  50   1        dio = 1; //释放
+  51   1        for(i = 0; i<8; i++)
+  52   1        {
+  53   2          _nop_();_nop_(); 
+  54   2          clk = 1;
+C51 COMPILER V9.60.0.0   SPI                                                               11/28/2021 01:18:18 PAGE 2   
+
+  55   2          _nop_();_nop_(); 
+  56   2          clk = 0;
+  57   2          rdat >>= 1;
+  58   2          _nop_();_nop_(); 
+  59   2          rd = dio;
+  60   2          rdat |= rd<<7;
+  61   2        }
+  62   1        ce = 0;
+  63   1        return rdat;
+  64   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    163    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

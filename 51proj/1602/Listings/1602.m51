@@ -1,0 +1,311 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    03/18/2022  08:40:09  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5_C51\C51\BIN\BL51.EXE .\Objects\1602.obj, .\Objects\main.obj TO .\Objects\1602 PRINT (.\Listings\1602.m51) RAM
+>> SIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\1602.obj (1602)
+  .\Objects\main.obj (MAIN)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C?COPY)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\1602 (1602)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0043H     UNIT         _DATA_GROUP_
+            DATA    004BH     0013H     UNIT         ?DT?MAIN
+            IDATA   005EH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     00F6H     UNIT         ?C?LIB_CODE
+            CODE    00F9H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0185H     0040H     UNIT         ?CO?MAIN
+            CODE    01C5H     0020H     UNIT         ?PR?CGRAMW?MAIN
+            CODE    01E5H     001FH     UNIT         ?PR?_LCM16WADD?1602
+            CODE    0204H     001CH     UNIT         ?PR?_LCM16WDAT?1602
+            CODE    0220H     001CH     UNIT         ?PR?_LCM16WCMD?1602
+            CODE    023CH     001CH     UNIT         ?C_INITSEG
+            CODE    0258H     0016H     UNIT         ?PR?LCM1602INIT?1602
+            CODE    026EH     0013H     UNIT         ?PR?BRIPROC?MAIN
+            CODE    0281H     0013H     UNIT         ?PR?MAIN?MAIN
+            CODE    0294H     0010H     UNIT         ?PR?T0INIT?MAIN
+            CODE    02A4H     000EH     UNIT         ?PR?_DELAY?MAIN
+            CODE    02B2H     0009H     UNIT         ?PR?DELAY2MS?MAIN
+            CODE    02BBH     0006H     UNIT         ?PR?DELAY100US?1602
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1602 (1602)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  03/18/2022  08:40:09  PAGE 2
+
+
+?PR?MAIN?MAIN                  0008H    0001H
+  +--> ?PR?T0INIT?MAIN
+  +--> ?PR?LCM1602INIT?1602
+  +--> ?PR?DELAY2MS?MAIN
+  +--> ?PR?_LCM16WCMD?1602
+  +--> ?PR?CGRAMW?MAIN
+
+?PR?LCM1602INIT?1602           -----    -----
+  +--> ?PR?_LCM16WCMD?1602
+
+?PR?_LCM16WCMD?1602            -----    -----
+  +--> ?PR?DELAY100US?1602
+
+?PR?CGRAMW?MAIN                0009H    0042H
+  +--> ?CO?MAIN
+  +--> ?PR?_LCM16WADD?1602
+  +--> ?PR?DELAY2MS?MAIN
+  +--> ?PR?_LCM16WDAT?1602
+
+?PR?_LCM16WADD?1602            -----    -----
+  +--> ?PR?DELAY100US?1602
+
+?PR?_LCM16WDAT?1602            -----    -----
+  +--> ?PR?DELAY100US?1602
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1602 (1602)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        1602
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00A0H.7       PUBLIC        en
+  C:0258H         PUBLIC        LCM1602init
+  B:00A0H.6       PUBLIC        rs
+  C:01E5H         PUBLIC        _LCM16wadd
+  D:00C8H         PUBLIC        T2CON
+  B:00A0H.5       PUBLIC        rw
+  C:02BBH         PUBLIC        Delay100us
+  C:0220H         PUBLIC        _LCM16wcmd
+  C:0204H         PUBLIC        _LCM16wdat
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _LCM16WDAT
+  D:0007H         SYMBOL        dat
+  C:0204H         LINE#         4
+  C:0204H         LINE#         5
+  C:0204H         LINE#         6
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  03/18/2022  08:40:09  PAGE 3
+
+
+  C:0206H         LINE#         7
+  C:0208H         LINE#         8
+  C:020AH         LINE#         9
+  C:020BH         LINE#         10
+  C:020DH         LINE#         11
+  C:0216H         LINE#         12
+  C:0218H         LINE#         13
+  C:021BH         LINE#         14
+  C:021DH         LINE#         15
+  C:021FH         LINE#         16
+  -------         ENDPROC       _LCM16WDAT
+  -------         PROC          _LCM16WCMD
+  D:0007H         SYMBOL        cmd
+  C:0220H         LINE#         17
+  C:0220H         LINE#         18
+  C:0220H         LINE#         19
+  C:0222H         LINE#         20
+  C:0224H         LINE#         21
+  C:0226H         LINE#         22
+  C:0227H         LINE#         23
+  C:0229H         LINE#         24
+  C:0232H         LINE#         25
+  C:0234H         LINE#         26
+  C:0237H         LINE#         27
+  C:0239H         LINE#         28
+  C:023BH         LINE#         29
+  -------         ENDPROC       _LCM16WCMD
+  -------         PROC          _LCM16WADD
+  D:0007H         SYMBOL        add
+  C:01E5H         LINE#         30
+  C:01E5H         LINE#         31
+  C:01E5H         LINE#         32
+  C:01E8H         LINE#         33
+  C:01EAH         LINE#         34
+  C:01ECH         LINE#         35
+  C:01EEH         LINE#         36
+  C:01EFH         LINE#         37
+  C:01F1H         LINE#         38
+  C:01FAH         LINE#         39
+  C:01FCH         LINE#         40
+  C:01FFH         LINE#         41
+  C:0201H         LINE#         42
+  C:0203H         LINE#         43
+  -------         ENDPROC       _LCM16WADD
+  -------         PROC          LCM1602INIT
+  C:0258H         LINE#         44
+  C:0258H         LINE#         45
+  C:0258H         LINE#         46
+  C:025AH         LINE#         47
+  C:025FH         LINE#         48
+  C:0264H         LINE#         49
+  C:0269H         LINE#         50
+  -------         ENDPROC       LCM1602INIT
+  -------         PROC          DELAY100US
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  03/18/2022  08:40:09  PAGE 4
+
+
+  C:02BBH         LINE#         55
+  C:02BBH         LINE#         56
+  C:02BBH         LINE#         59
+  C:02BCH         LINE#         60
+  C:02BEH         LINE#         61
+  C:02C0H         LINE#         62
+  -------         ENDPROC       DELAY100US
+  -------         ENDMOD        1602
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:01C5H         PUBLIC        cgramw
+  C:02B2H         PUBLIC        Delay2ms
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:02A4H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:0294H         PUBLIC        T0Init
+  D:004BH         PUBLIC        tcount
+  C:0281H         PUBLIC        main
+  D:004CH         PUBLIC        tbri
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:004DH         PUBLIC        bri
+  C:0185H         SYMBOL        _?ix1000
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  C:026EH         PUBLIC        Briproc
+  B:0088H.4       PUBLIC        TR0
+  D:004EH         PUBLIC        str
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          DELAY2MS
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  -------         ENDDO         
+  C:02B2H         LINE#         9
+  C:02B2H         LINE#         10
+  C:02B2H         LINE#         12
+  C:02B4H         LINE#         13
+  C:02B6H         LINE#         15
+  C:02B6H         LINE#         16
+  C:02B8H         LINE#         17
+  C:02BAH         LINE#         18
+  -------         ENDPROC       DELAY2MS
+  -------         PROC          T0INIT
+  C:0294H         LINE#         19
+  C:0294H         LINE#         20
+  C:0294H         LINE#         21
+  C:0297H         LINE#         22
+  C:029AH         LINE#         23
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  03/18/2022  08:40:09  PAGE 5
+
+
+  C:029DH         LINE#         24
+  C:029FH         LINE#         25
+  C:02A1H         LINE#         26
+  C:02A3H         LINE#         27
+  -------         ENDPROC       T0INIT
+  -------         PROC          BRIPROC
+  C:026EH         LINE#         28
+  C:026EH         LINE#         29
+  C:026EH         LINE#         30
+  C:0274H         LINE#         31
+  C:0274H         LINE#         32
+  C:027BH         LINE#         33
+  C:027EH         LINE#         35
+  C:0280H         LINE#         36
+  C:0280H         LINE#         37
+  -------         ENDPROC       BRIPROC
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        t
+  C:02A4H         LINE#         38
+  C:02A4H         LINE#         39
+  C:02A4H         LINE#         40
+  C:02AEH         LINE#         41
+  C:02B1H         LINE#         42
+  -------         ENDPROC       _DELAY
+  -------         PROC          CGRAMW
+  -------         DO            
+  D:0009H         SYMBOL        cgr
+  D:0049H         SYMBOL        n
+  D:004AH         SYMBOL        m
+  -------         ENDDO         
+  C:01C5H         LINE#         43
+  C:01C5H         LINE#         44
+  C:01C5H         LINE#         45
+  C:01D8H         LINE#         52
+  C:01DDH         LINE#         53
+  C:01E0H         LINE#         54
+  -------         ENDPROC       CGRAMW
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:0281H         LINE#         67
+  C:0281H         LINE#         68
+  C:0281H         LINE#         70
+  C:0284H         LINE#         71
+  C:0287H         LINE#         72
+  C:028AH         LINE#         73
+  C:028FH         LINE#         74
+  C:0292H         LINE#         75
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        ?C?COPY
+  C:00D3H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  03/18/2022  08:40:09  PAGE 6
+
+
+    SEGMENT: ?PR?BRIPROC?MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MAIN
+
+Program Size: data=95.0 xdata=0 code=705
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

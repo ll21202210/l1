@@ -1,0 +1,76 @@
+C51 COMPILER V9.60.0.0   MAX6675                                                           02/04/2023 18:49:58 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAX6675
+OBJECT MODULE PLACED IN .\Objects\max6675.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE max6675.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\max6675) DEBUG OBJECTEX
+                    -TEND PRINT(.\Listings\max6675.lst) OBJECT(.\Objects\max6675.obj)
+
+line level    source
+
+   1          #include "max6675.h"
+   2          #include <intrins.h>
+   3          
+   4          
+   5          u16 SPI_Read(void)
+   6          {
+   7   1              u8 i;
+   8   1              u16 readdata = 0;
+   9   1              SPI_CS = 0;
+  10   1              for(i = 0; i < 16; i++)
+  11   1              {
+  12   2                      readdata <<= 1;
+  13   2                      if(SPI_SO)
+  14   2                              readdata |= 0x01;
+  15   2                      
+  16   2                      
+  17   2                      SPI_SCL = 1;
+  18   2                      _nop_();_nop_();_nop_();_nop_();
+  19   2                      SPI_SCL = 0;
+  20   2                      _nop_();_nop_();_nop_();
+  21   2              }
+  22   1              SPI_CS = 1;
+  23   1              return readdata;
+  24   1      }
+  25          void MAX6675_Init(void)
+  26          {
+  27   1              SPI_SCL = 0;
+  28   1              SPI_CS  = 1;
+  29   1              SPI_SO = 1;
+  30   1      }
+  31          float MAX6675_Read(void)
+  32          {
+  33   1              float temp;
+  34   1              u16 ReceiveData;
+  35   1              ReceiveData = SPI_Read();
+  36   1              ReceiveData >>= 3;
+  37   1              
+  38   1              temp = ReceiveData * 0.25;
+  39   1              return temp;
+  40   1      }
+  41          // 正常返回值为0 异常为1
+  42          u8 MAX6675_Check(void)
+  43          {
+  44   1              u16 ReceiveData;
+  45   1              ReceiveData = SPI_Read();
+  46   1              if(ReceiveData & 0x04)
+  47   1                      return 1;
+  48   1              else
+  49   1                      return 0;
+  50   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     97    ----
+C51 COMPILER V9.60.0.0   MAX6675                                                           02/04/2023 18:49:58 PAGE 2   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

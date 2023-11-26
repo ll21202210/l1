@@ -1,0 +1,5 @@
+".\Objects\max6675.obj",
+".\Objects\main.obj",
+".\Objects\tm1637.obj" 
+TO ".\Objects\temp" 
+PRINT(".\Listings\temp.m51") RAMSIZE(256) 

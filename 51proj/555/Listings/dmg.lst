@@ -1,0 +1,116 @@
+C51 COMPILER V9.60.0.0   DMG                                                               05/27/2022 18:02:04 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DMG
+OBJECT MODULE PLACED IN .\Objects\dmg.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE dmg.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\d
+                    -mg.lst) OBJECT(.\Objects\dmg.obj)
+
+line level    source
+
+   1          #include <intrins.h>
+   2          #include <reg52.h>
+   3          #define u8 unsigned char
+   4          #define u16 unsigned int
+   5          u8 ddata[8] = {0};
+   6          
+   7          unsigned char bdata chdata;
+   8          sbit chdata1 = chdata^0;
+   9          sbit chdata2 = chdata^1;
+  10          sbit chdata3 = chdata^2;
+  11          sbit CHA = P1^0;
+  12          sbit CHB = P1^1;
+  13          sbit CHC = P1^2;
+  14          
+  15          u8 code smgduan[17]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+  16                                                  0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};//显示0~F的值
+  17          u16 freq = 85, tcount = 0, tmpfreq = 0;
+  18          void delay(u16 t)
+  19          {
+  20   1              while(t--);
+  21   1      }
+  22                  
+  23          void Display()
+  24          {
+  25   1              u8 i;
+  26   1              for(i = 0; i < 8; i++)
+  27   1              {
+  28   2                      chdata = i;
+  29   2                      CHA = chdata1;CHB = chdata2;CHC = chdata3; //数码管位选
+  30   2                      P0 = ddata[i];
+  31   2                      delay(100);
+  32   2                      P0 = 0x00; //段选 消隐
+  33   2              }
+  34   1      }
+  35          void Tinit()
+  36          {
+  37   1              TMOD = 0x51;
+  38   1              TH0 = 15536 >> 8;
+  39   1              TL0 = 15536 & 0xff;
+  40   1              TH1 = 0;
+  41   1              TL1 = 0;
+  42   1              EA = 1;
+  43   1              ET0 = 1;
+  44   1              ET1 = 1;
+  45   1              TR0 = 1;
+  46   1              TR1 = 1;
+  47   1      }
+  48          void Run()
+  49          {
+  50   1              ddata[7] = smgduan[(freq) % 10];
+  51   1              ddata[6] = smgduan[(freq / 10) % 10];
+  52   1              ddata[5] = smgduan[(freq / 100) % 10];
+  53   1              ddata[4] = smgduan[(freq / 1000) % 10];
+  54   1              ddata[3] = smgduan[(freq / 10000) % 10];
+C51 COMPILER V9.60.0.0   DMG                                                               05/27/2022 18:02:04 PAGE 2   
+
+  55   1      }
+  56          sbit lll = P3^3;
+  57          void main()
+  58          {
+  59   1              Tinit();
+  60   1              
+  61   1              while(1)
+  62   1              {
+  63   2                      Display();
+  64   2                      Run();
+  65   2                      lll = ~lll;
+  66   2              }
+  67   1      }
+  68          void IRQ_T0() interrupt 1
+  69          {
+  70   1              TH0 = 15536 >> 8;
+  71   1              TL0 = 15536 & 0xff;
+  72   1              if(tcount < 20)
+  73   1                      tcount++;
+  74   1              else
+  75   1              {
+  76   2                      tcount = 0;
+  77   2                      freq = TH1 << 8;
+  78   2                      freq += TL1;
+  79   2                      freq += tmpfreq;
+  80   2                      tmpfreq = 0;
+  81   2                      TH1 = 0;
+  82   2                      TL1 = 0;
+  83   2              }
+  84   1      }
+  85          void IRQ_T1() interrupt 3
+  86          {
+  87   1              tmpfreq += 65536;
+  88   1      }
+  89          
+  90          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    344    ----
+   CONSTANT SIZE    =     17    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     15    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

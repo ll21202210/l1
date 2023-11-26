@@ -1,0 +1,150 @@
+C51 COMPILER V9.60.0.0   ADC                                                               12/12/2021 21:16:33 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ADC
+OBJECT MODULE PLACED IN .\Objects\adc.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE adc.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\a
+                    -dc.lst) TABS(2) OBJECT(.\Objects\adc.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include "spi.h"
+   4          
+   5          #define dig P0
+   6          
+   7          sbit lsa = P1^0;
+   8          sbit lsb = P1^1;
+   9          sbit lsc = P1^2;
+  10          sbit led = P2^4;
+  11          
+  12          u8 DData[8] = {0};
+  13          u8 code smgduan[16]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+  14                    0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};//œ‘ æ0~Fµƒ÷µ
+  15          unsigned long val;
+  16          u8 count = 0,bri = 0;
+  17          
+  18          void delay(u16 i)
+  19          {
+  20   1        while(i--)
+  21   1          _nop_();
+  22   1      }
+  23          void Display(void)
+  24          { 
+  25   1        u8 i;
+  26   1        for(i = 0; i < 8; i++)
+  27   1        {
+  28   2          switch(i)
+  29   2          {
+  30   3            case 0:
+  31   3              lsa = 0;lsb = 0;lsc = 0;
+  32   3              break;
+  33   3            case 1:
+  34   3              lsa = 0;lsb = 0;lsc = 1;
+  35   3              break;
+  36   3            case 2:
+  37   3              lsa = 0;lsb = 1;lsc = 0;
+  38   3              break;
+  39   3            case 3:
+  40   3              lsa = 0;lsb = 1;lsc = 1;
+  41   3              break;
+  42   3            case 4:
+  43   3              lsa = 1;lsb = 0;lsc = 0;
+  44   3              break;
+  45   3            case 5:
+  46   3              lsa = 1;lsb = 0;lsc = 1;
+  47   3              break;
+  48   3            case 6:
+  49   3              lsa = 1;lsb = 1;lsc = 0;
+  50   3              break;
+  51   3            case 7:
+  52   3              lsa = 1;lsb = 1;lsc = 1;
+  53   3              break;
+  54   3          }
+C51 COMPILER V9.60.0.0   ADC                                                               12/12/2021 21:16:33 PAGE 2   
+
+  55   2          dig = DData[7-i];
+  56   2          delay(100);
+  57   2          dig = 0x00;
+  58   2        }
+  59   1        
+  60   1      }
+  61          void TimerInit(void)
+  62          {
+  63   1        TMOD = 0x01;
+  64   1        TH0 = 0xff;
+  65   1        TL0 = 0x9c;
+  66   1        EA = 1;
+  67   1        ET0 = 1;
+  68   1        TR0 = 1;
+  69   1      }
+  70          void Proc(void)
+  71          {
+  72   1        
+  73   1        val = xpt2046r(0X94); //a0 - a2 1010 0100 0xa4
+  74   1        DData[0] = smgduan[val%10];
+  75   1        DData[1] = smgduan[(val/10)%10];
+  76   1        DData[2] = smgduan[(val/100)%10];
+  77   1        DData[3] = smgduan[(val/1000)%10];
+  78   1      //  DData[4] = smgduan[(val/10000)%10];
+  79   1      //  DData[5] = smgduan[(val/100000)%10];
+  80   1      //  DData[6] = smgduan[(val/1000000)%10];
+  81   1      //  DData[7] = smgduan[(val/10000000)%10];
+  82   1      }
+  83          void main(void)
+  84          {
+  85   1        u8 i,tbri;
+  86   1        float brig;
+  87   1        TimerInit();
+  88   1        while(1)
+  89   1        {
+  90   2          Proc();
+  91   2          tbri = (val*100)/8192;
+  92   2      //    tbri = brig ;
+  93   2          
+  94   2            
+  95   2          for(i = 0; i< 3; i++)
+  96   2          {
+  97   3            if(tbri != bri)
+  98   3          {
+  99   4            if(tbri < bri)
+ 100   4              bri--;
+ 101   4            else
+ 102   4              bri++;
+ 103   4          }
+ 104   3            Display();
+ 105   3          }
+ 106   2        }
+ 107   1      }
+*** WARNING C280 IN LINE 86 OF adc.c: 'brig': unreferenced local variable
+ 108          
+ 109          void T0int() interrupt 1
+ 110          {
+ 111   1        TH0 = 0xff;
+ 112   1        TL0 = 0x9c;
+ 113   1        
+ 114   1        if(count == 100)
+ 115   1          count = 0;
+C51 COMPILER V9.60.0.0   ADC                                                               12/12/2021 21:16:33 PAGE 3   
+
+ 116   1        if(bri > count)
+ 117   1          led = 0;
+ 118   1        else
+ 119   1          led = 1;
+ 120   1        count++;
+ 121   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    418    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

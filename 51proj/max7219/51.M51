@@ -1,0 +1,292 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/11/2021  19:27:38  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5_C51\C51\BIN\BL51.EXE main.obj, max7219.obj TO 51
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  max7219.obj (MAX7219)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  51 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         _DATA_GROUP_
+            IDATA   000CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     00C0H     UNIT         ?PR?DONGHUA?MAIN
+            CODE    08C0H     0052H     UNIT         ?PR?_MAX7219W?MAX7219
+            CODE    0912H     0050H     UNIT         ?CO?MAIN
+            CODE    0962H     003CH     UNIT         ?PR?CAIDISPLAY?MAIN
+            CODE    099EH     0037H     UNIT         ?PR?_DISPLAY?MAIN
+            CODE    09D5H     001FH     UNIT         ?PR?MAIN?MAIN
+            CODE    09F4H     001CH     UNIT         ?PR?MAX7219INIT?MAIN
+            CODE    0A10H     001AH     UNIT         ?PR?CLEAR?MAIN
+            CODE    0A2AH     0012H     UNIT         ?PR?_DELAY?MAIN
+            CODE    0A3CH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   51 (MAIN)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN                  -----    -----
+  +--> ?PR?_DELAY?MAIN
+  +--> ?PR?MAX7219INIT?MAIN
+  +--> ?PR?DONGHUA?MAIN
+  +--> ?PR?CAIDISPLAY?MAIN
+  +--> ?PR?CLEAR?MAIN
+
+?PR?MAX7219INIT?MAIN           -----    -----
+  +--> ?PR?_MAX7219W?MAX7219
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2021  19:27:38  PAGE 2
+
+
+
+?PR?DONGHUA?MAIN               0008H    0004H
+  +--> ?PR?_MAX7219W?MAX7219
+  +--> ?PR?_DELAY?MAIN
+
+?PR?CAIDISPLAY?MAIN            -----    -----
+  +--> ?PR?_DISPLAY?MAIN
+  +--> ?PR?_DELAY?MAIN
+
+?PR?_DISPLAY?MAIN              0008H    0002H
+  +--> ?CO?MAIN
+  +--> ?PR?_MAX7219W?MAX7219
+
+?PR?CLEAR?MAIN                 0008H    0001H
+  +--> ?PR?_MAX7219W?MAX7219
+
+
+
+SYMBOL TABLE OF MODULE:  51 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0A10H         PUBLIC        clear
+  C:0962H         PUBLIC        caiDisplay
+  D:00A8H         PUBLIC        IE
+  C:0A2EH         PUBLIC        _delay
+  C:09F4H         PUBLIC        Max7219Init
+  D:00B8H         PUBLIC        IP
+  C:0912H         PUBLIC        ddat
+  C:09D5H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:099EH         PUBLIC        _Display
+  D:00C8H         PUBLIC        T2CON
+  C:0800H         PUBLIC        donghua
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAX7219INIT
+  C:09F4H         LINE#         17
+  C:09F4H         LINE#         18
+  C:09F4H         LINE#         19
+  C:09FBH         LINE#         20
+  C:0A02H         LINE#         21
+  C:0A09H         LINE#         22
+  -------         ENDPROC       MAX7219INIT
+  -------         PROC          _DISPLAY
+  D:0008H         SYMBOL        s
+  -------         DO            
+  D:0009H         SYMBOL        i
+  -------         ENDDO         
+  C:099EH         LINE#         24
+  C:09A0H         LINE#         25
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2021  19:27:38  PAGE 3
+
+
+  C:09A0H         LINE#         27
+  C:09AEH         LINE#         28
+  C:09AEH         LINE#         29
+  C:09D0H         LINE#         30
+  C:09D4H         LINE#         31
+  -------         ENDPROC       _DISPLAY
+  C:0A2AH         SYMBOL        L?0035
+  -------         PROC          L?0034
+  -------         ENDPROC       L?0034
+  C:0A2AH         SYMBOL        L?0035
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        i
+  C:0A2EH         LINE#         32
+  C:0A2EH         LINE#         33
+  C:0A2EH         LINE#         34
+  C:0A38H         LINE#         35
+  C:0A3BH         LINE#         36
+  -------         ENDPROC       _DELAY
+  -------         PROC          CAIDISPLAY
+  C:0962H         LINE#         37
+  C:0962H         LINE#         38
+  C:0962H         LINE#         39
+  C:0967H         LINE#         40
+  C:096AH         LINE#         41
+  C:096FH         LINE#         42
+  C:0972H         LINE#         43
+  C:0977H         LINE#         44
+  C:097AH         LINE#         45
+  C:097FH         LINE#         46
+  C:0982H         LINE#         47
+  C:0987H         LINE#         48
+  C:098AH         LINE#         49
+  C:098FH         LINE#         50
+  C:0992H         LINE#         51
+  C:0997H         LINE#         52
+  -------         ENDPROC       CAIDISPLAY
+  -------         PROC          CLEAR
+  -------         DO            
+  D:0008H         SYMBOL        y
+  -------         ENDDO         
+  C:0A10H         LINE#         54
+  C:0A10H         LINE#         55
+  C:0A10H         LINE#         57
+  C:0A1EH         LINE#         58
+  C:0A1EH         LINE#         59
+  C:0A25H         LINE#         60
+  C:0A29H         LINE#         61
+  -------         ENDPROC       CLEAR
+  -------         PROC          DONGHUA
+  -------         DO            
+  D:0008H         SYMBOL        x
+  D:0009H         SYMBOL        y
+  D:000AH         SYMBOL        t
+  D:000BH         SYMBOL        n
+  -------         ENDDO         
+  C:0800H         LINE#         62
+  C:0800H         LINE#         63
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2021  19:27:38  PAGE 4
+
+
+  C:0800H         LINE#         65
+  C:080EH         LINE#         66
+  C:080EH         LINE#         67
+  C:0815H         LINE#         68
+  C:0819H         LINE#         69
+  C:0827H         LINE#         70
+  C:0827H         LINE#         71
+  C:082AH         LINE#         72
+  C:082DH         LINE#         74
+  C:083BH         LINE#         75
+  C:083BH         LINE#         77
+  C:0844H         LINE#         78
+  C:084CH         LINE#         79
+  C:0857H         LINE#         80
+  C:085EH         LINE#         81
+  C:0865H         LINE#         82
+  C:0869H         LINE#         83
+  C:086DH         LINE#         84
+  C:087BH         LINE#         85
+  C:087BH         LINE#         86
+  C:087EH         LINE#         87
+  C:0881H         LINE#         88
+  C:088FH         LINE#         89
+  C:088FH         LINE#         90
+  C:0895H         LINE#         91
+  C:08A0H         LINE#         92
+  C:08A6H         LINE#         93
+  C:08B0H         LINE#         95
+  C:08B7H         LINE#         96
+  C:08BBH         LINE#         97
+  C:08BFH         LINE#         98
+  -------         ENDPROC       DONGHUA
+  -------         PROC          MAIN
+  C:09D5H         LINE#         99
+  C:09D5H         LINE#         100
+  C:09D5H         LINE#         102
+  C:09DCH         LINE#         103
+  C:09DFH         LINE#         105
+  C:09DFH         LINE#         106
+  C:09DFH         LINE#         107
+  C:09E2H         LINE#         108
+  C:09E5H         LINE#         109
+  C:09E8H         LINE#         110
+  C:09EBH         LINE#         111
+  C:09F2H         LINE#         112
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        MAX7219
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:08C0H         PUBLIC        _max7219w
+  D:00B8H         PUBLIC        IP
+  D:0098H         PUBLIC        SCON
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2021  19:27:38  PAGE 5
+
+
+  D:0088H         PUBLIC        TCON
+  B:00A0H.2       PUBLIC        clk
+  B:00A0H.0       PUBLIC        dio
+  B:00A0H.1       PUBLIC        cs
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _MAX7219W
+  D:0007H         SYMBOL        cmd
+  D:0005H         SYMBOL        da2
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:08C0H         LINE#         5
+  C:08C0H         LINE#         6
+  C:08C0H         LINE#         8
+  C:08C2H         LINE#         9
+  C:08C3H         LINE#         10
+  C:08C5H         LINE#         11
+  C:08D1H         LINE#         12
+  C:08D1H         LINE#         13
+  C:08DCH         LINE#         14
+  C:08E0H         LINE#         15
+  C:08E1H         LINE#         16
+  C:08E3H         LINE#         17
+  C:08E4H         LINE#         18
+  C:08E6H         LINE#         19
+  C:08E7H         LINE#         20
+  C:08EAH         LINE#         21
+  C:08F6H         LINE#         22
+  C:08F6H         LINE#         23
+  C:0901H         LINE#         24
+  C:0905H         LINE#         25
+  C:0906H         LINE#         26
+  C:0908H         LINE#         27
+  C:0909H         LINE#         28
+  C:090BH         LINE#         29
+  C:090CH         LINE#         30
+  C:090FH         LINE#         31
+  C:0911H         LINE#         32
+  -------         ENDPROC       _MAX7219W
+  -------         ENDMOD        MAX7219
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 023CH BYTE (27%) *
+******************************************************************************
+
+Program Size: data=13.0 xdata=0 code=587
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

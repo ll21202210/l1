@@ -1,0 +1,48 @@
+C51 COMPILER V9.60.0.0   0128                                                              01/28/2022 23:03:02 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE 0128
+OBJECT MODULE PLACED IN .\Objects\0128.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE 0128.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -0128.lst) TABS(2) OBJECT(.\Objects\0128.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include <absacc.h>
+   4          
+   5          void delay(unsigned int t)
+   6          {
+   7   1        while(t--)
+   8   1          _nop_();
+   9   1      }
+  10          
+  11          void main(void)
+  12          {
+  13   1      
+  14   1        while(1)
+  15   1        {
+  16   2          XBYTE[0x8000] = 0x3f;
+  17   2          delay(60000);
+  18   2          XBYTE[0x8000] = 0x6b;
+  19   2          delay(60000);
+  20   2          delay(60000);
+  21   2          delay(60000);
+  22   2        }
+  23   1      }
+  24          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     40    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

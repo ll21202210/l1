@@ -1,0 +1,88 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              04/04/2023 14:58:35 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -main.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          #define uint unsigned int
+   4          #define uchar unsigned char
+   5          
+   6          sbit P1_0=P3^5;//控制音乐播放按键
+   7          sbit SPK =P3^6;//扬声器
+   8          uchar STH0,STL0;
+   9          
+  10          uint code tone[] = {63777,63968,64139,64215,64360,64488,64603,64654,64750,64836,64875,64948,65012,65069,65
+             -095,65143,65186,65206,65242,65274,65301,0};
+  11          //音符对应T初值(从左到右，分别为7个低音，7个中音，7个高音，1个0)
+  12          uchar code music [] = {9,11,11,12,11,9,7,7,8,9,9,8,7,8,21,9,11,11,12,11,9,7,7,8,9,9,8,8,7,21,10,10,10,12,1
+             -1,11,9,8,21,9,11,11,12,11,9,7,7,8,9,9,8,8,7,21};//音乐的琴谱,需要对照tone
+  13          
+  14          uchar code rhythm[] = {4,4,6,2,4,4,4,2,2,4,4,4,4,8,8,4,4,6,2,4,4,4,2,2,4,4,4,4,8,8,10,10,4,6,10,4,4,8,8,4,
+             -4,6,2,4,4,4,2,2,4,4,4,4,8,8,};//控
+  15          void delay(uint time)//延时子函数
+  16          {
+  17   1              uint m = 0;
+  18   1              for(;time >0;time--)
+  19   1                      for(m = 0;m < 125;m++);
+  20   1      }
+  21          void int_srv1( ) interrupt 1//中断函数
+  22          {
+  23   1              TH0 =STH0;//装载计数初值
+  24   1              TL0 = STL0;
+  25   1              SPK =~SPK;//P1.0反向
+  26   1      }
+  27          void main(void)
+  28          {
+  29   1              uchar i;
+  30   1              TMOD=0X01;//T0方式1
+  31   1              IE = 0x82;//开启总中断和相应的中断源中断
+  32   1              while(1)
+  33   1              {
+  34   2                      if(P1_0==0)//按下播放按钮
+  35   2                      {
+  36   3                              for(i=0;i <54;i++) //i的值和music应该一致
+  37   3                              {
+  38   4                                      if(music[i]==music[i +1])//检测相邻的音符是否一致
+  39   4                                      {
+  40   5                                              TR0=1;//开启T0
+  41   5                                              STH0=tone[music[i]]/256;//定时器高八位
+  42   5                                              STL0=tone[music[i]]%256;//定时器低八位
+  43   5                                              delay(80 *rhythm[i]);//延时,从而让声音按照一定的规律发声
+  44   5                                              SPK = 1;
+  45   5                                              TR0=0;//关闭T0
+  46   5                                              delay(15);
+  47   5                                      }
+  48   4                                      else
+  49   4                                      {
+  50   5                                              TR0 = 1;
+  51   5                                              STH0 = tone[music[i]] /256;
+C51 COMPILER V9.60.0.0   MAIN                                                              04/04/2023 14:58:35 PAGE 2   
+
+  52   5                                              STL0= tone[music[i]] %256;
+  53   5                                              delay(80 * rhythm[i]);
+  54   5                                      }
+  55   4                              }
+  56   3                      }
+  57   2                      TR0 = 0;
+  58   2              }
+  59   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    187    ----
+   CONSTANT SIZE    =    152    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

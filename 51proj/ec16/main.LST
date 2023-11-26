@@ -1,0 +1,142 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              08/02/2022 11:11:22 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #define u8 unsigned char
+   4          #define u16 unsigned int
+   5          #define u32 unsigned long
+   6          
+   7          sfr AUXR = 0x8e;
+   8          #define s       300
+   9          sbit ina = P0^0;
+  10          sbit inb = P0^1;
+  11          sbit led  = P1^0;
+  12          u8 ina_last, inb_last;
+  13          u8 pwm_duty = 10; // ×ó
+  14          
+  15          void TimerInit()
+  16          {
+  17   1              TMOD = 0x02;
+  18   1              TH0 = 156;
+  19   1              TL0 = 156; // 100us
+  20   1              EA = 1;
+  21   1              ET0 = 1;
+  22   1              TR0 = 1;
+  23   1      }
+  24          void delay(u32 t)
+  25          {
+  26   1              while(t--)
+  27   1              _nop_();
+  28   1      }
+  29          char Scan()
+  30          {
+  31   1              char Scanv = 0;
+  32   1              if(ina != ina_last)
+  33   1              {
+  34   2                      if(ina == 1)
+  35   2                      {
+  36   3                              if(inb == 1 && inb_last == 0)
+  37   3                              {
+  38   4                                      Scanv = 1;
+  39   4                              }
+  40   3                              else if(inb == 0 && inb_last == 1)
+  41   3                              {
+  42   4                                      Scanv = -1;
+  43   4                              }
+  44   3                              else if(inb == inb_last && inb == 1)
+  45   3                              {
+  46   4                                      Scanv = -1;
+  47   4                              }
+  48   3                              else if(inb == inb_last && inb == 0)
+  49   3                              {
+  50   4                                      Scanv = 1;
+  51   4                              }
+  52   3                      }
+  53   2                      else
+  54   2                      {
+  55   3                              if(inb == 1 && inb_last == 0)
+C51 COMPILER V9.60.0.0   MAIN                                                              08/02/2022 11:11:22 PAGE 2   
+
+  56   3                              {
+  57   4                                      Scanv = -1;
+  58   4                              }
+  59   3                              else if(inb == 0 && inb_last == 1)
+  60   3                              {
+  61   4                                      Scanv = 1;
+  62   4                              }
+  63   3                              else if(inb == inb_last && inb == 1)
+  64   3                              {
+  65   4                                      Scanv = 1;
+  66   4                              }
+  67   3                              else if(inb == inb_last && inb == 0)
+  68   3                              {
+  69   4                                      Scanv = -1;
+  70   4                              }
+  71   3                      }
+  72   2                      ina_last = ina;
+  73   2                      inb_last = inb;
+  74   2              }
+  75   1              return Scanv;
+  76   1      }
+  77          void main(void)
+  78          {
+  79   1              TimerInit();
+  80   1              ina_last = ina;
+  81   1              inb_last = inb;
+  82   1              while(1)
+  83   1              {
+  84   2                      delay(10);
+  85   2                      switch(Scan())
+  86   2                      {
+  87   3                              case -1:
+  88   3                                      if(pwm_duty > 5)
+  89   3                                              pwm_duty--;
+  90   3                                      break;
+  91   3                              case 1:
+  92   3                              if(pwm_duty < 25)
+  93   3                                      pwm_duty++;
+  94   3                                      break;
+  95   3                              case 0:
+  96   3                                      break;
+  97   3                              default:
+  98   3                                      break;
+  99   3                      }
+ 100   2              }
+ 101   1      }
+ 102          void IRQ_T0() interrupt 1
+ 103          {
+ 104   1              static u8 i = 0;
+ 105   1              if(i < 25)
+ 106   1                      i++;
+ 107   1              else
+ 108   1                      i = 0;
+ 109   1              if(i < (pwm_duty))
+ 110   1                      led = 1;
+ 111   1              else
+ 112   1                      led = 0;
+ 113   1              
+ 114   1      }
+ 115          
+
+
+C51 COMPILER V9.60.0.0   MAIN                                                              08/02/2022 11:11:22 PAGE 3   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    275    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

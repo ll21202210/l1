@@ -1,0 +1,15 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Y\Desktop\0102zuoye\zuoye.uvproj
+Project File Date:  01/02/2022
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling zy.c...
+linking...
+Program Size: data=20.0 xdata=0 code=699
+creating hex file from "zuoye"...
+"zuoye" - 0 Error(s), 0 Warning(s).

@@ -1,0 +1,90 @@
+C51 COMPILER V9.60.0.0   DS1302                                                            01/02/2022 18:47:38 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DS1302
+OBJECT MODULE PLACED IN .\Objects\ds1302.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE ds1302.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\ds1302.lst) TABS(2) OBJECT(.\Objects\ds1302.obj)
+
+line level    source
+
+   1          #include "ds1302.h"
+   2          
+   3          
+   4          u8 DSread(u8 cmd)
+   5          {
+   6   1        u8 i,rdat;
+   7   1        clk = 0;
+   8   1        _nop_();
+   9   1        ce = 1;
+  10   1        for(i = 0; i < 8; i++)
+  11   1        {
+  12   2          dat = cmd << 7;
+  13   2          cmd >>= 1;
+  14   2          clk = 1;
+  15   2          _nop_();
+  16   2          clk = 0;
+  17   2          _nop_();
+  18   2        }
+  19   1        for(i = 0; i < 8; i++)
+  20   1        {
+  21   2          rdat >>= 1;
+  22   2          rdat |= (u8)dat << 7;
+  23   2          clk = 1;
+  24   2          _nop_();
+  25   2          clk = 0;
+  26   2          _nop_();
+  27   2        }
+  28   1        ce = 0;
+  29   1        clk = 1;
+  30   1        dat = 1;
+  31   1        return rdat;
+  32   1      }
+  33          void DSwirte(u8 cmd,u8 data1)
+  34          {
+  35   1        u8 i;
+  36   1        clk = 0;
+  37   1        _nop_();
+  38   1        ce = 1;
+  39   1        for(i = 0; i < 8; i++)
+  40   1        {
+  41   2          dat = cmd << 7;
+  42   2          cmd >>= 1;
+  43   2          clk = 1;
+  44   2          _nop_();
+  45   2          clk = 0;
+  46   2          _nop_();
+  47   2        }
+  48   1        for(i = 0; i < 8; i++)
+  49   1        {
+  50   2          dat = data1 << 7;
+  51   2          data1 >>= 1;
+  52   2          clk = 1;
+  53   2          _nop_();
+  54   2          clk = 0;
+C51 COMPILER V9.60.0.0   DS1302                                                            01/02/2022 18:47:38 PAGE 2   
+
+  55   2          _nop_();
+  56   2        }
+  57   1        ce = 0;
+  58   1        clk = 1;
+  59   1        dat = 1;
+  60   1      }
+  61          void DS1302Init()
+  62          {
+  63   1        
+  64   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    172    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

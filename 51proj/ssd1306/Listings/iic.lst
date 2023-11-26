@@ -1,0 +1,137 @@
+C51 COMPILER V9.60.0.0   IIC                                                               11/27/2021 13:27:57 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE IIC
+OBJECT MODULE PLACED IN .\Objects\iic.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE iic.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\i
+                    -ic.lst) TABS(2) OBJECT(.\Objects\iic.obj)
+
+line level    source
+
+   1          #include "iic.h"
+   2          
+   3          void iicstart(void)
+   4          {
+   5   1        sda = 1;
+   6   1        scl = 1;
+   7   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+   8   1        sda = 0;
+   9   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  10   1      }
+  11          void iicstop(void)
+  12          {
+  13   1        
+  14   1        sda = 0;
+  15   1        scl = 1;
+  16   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  17   1        sda = 1;
+  18   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  19   1      }
+  20          void iics8bit(u8 da)
+  21          {
+  22   1        u8 i;
+  23   1        scl = 0;
+  24   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  25   1        for(i = 0; i<8; i++)
+  26   1        {
+  27   2          sda = da>>7;
+  28   2          da = da<<1;
+  29   2          _nop_();_nop_();_nop_();_nop_();_nop_();//5us
+  30   2          scl = 1;
+  31   2          _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  32   2          scl = 0;
+  33   2          _nop_();_nop_();_nop_(); //5us
+  34   2        }
+  35   1      }
+  36          void iicwait(void)
+  37          {
+  38   1        u8 i = 250;
+  39   1        sda = 1;
+  40   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  41   1        scl = 1;
+  42   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  43   1        while(sda && i--)
+  44   1        {
+  45   2          _nop_();_nop_(); 
+  46   2        } //1ms
+  47   1        sda = 0;
+  48   1        _nop_();_nop_();_nop_();_nop_();
+  49   1      }
+  50          
+  51          void ssdscmd(u8 cmd)
+  52          {
+  53   1        iicstart();
+  54   1        iics8bit(0x78);
+C51 COMPILER V9.60.0.0   IIC                                                               11/27/2021 13:27:57 PAGE 2   
+
+  55   1        iicwait();
+  56   1        iics8bit(0x00);
+  57   1        iicwait();
+  58   1        iics8bit(cmd);
+  59   1        iicwait();
+  60   1        iicstop();
+  61   1      }
+  62          void ssdsdat(u8 dat)
+  63          {
+  64   1        iicstart();
+  65   1        iics8bit(0x78);
+  66   1        iicwait();
+  67   1        iics8bit(0x40);
+  68   1        iicwait();
+  69   1        iics8bit(dat);
+  70   1        iicwait();
+  71   1        iicstop();
+  72   1      }
+  73          void ssd1306init(void)
+  74          {
+  75   1      //    ssdscmd(0x8D);
+  76   1      //    ssdscmd(0x14);
+  77   1      //    ssdscmd(0xAF);
+  78   1      //    ssdscmd(0xA5);
+  79   1        ssdscmd(0xAE);   //display off
+  80   1        ssdscmd(0x20);  //Set Memory Addressing Mode  
+  81   1        ssdscmd(0x10);  //00,Horizontal Addressing Mode;01,Vertical Addressing Mode;10,Page Addressing Mode (RESET
+             -);11,Invalid
+  82   1        ssdscmd(0xb0);  //Set Page Start Address for Page Addressing Mode,0-7
+  83   1        ssdscmd(0xc8);  //Set COM Output Scan Direction
+  84   1        ssdscmd(0x00);//---set low column address
+  85   1        ssdscmd(0x10);//---set high column address
+  86   1        ssdscmd(0x40);//--set start line address
+  87   1        ssdscmd(0x81);//--set contrast control register
+  88   1        ssdscmd(0x7f);
+  89   1        ssdscmd(0xa1);//--set segment re-map 0 to 127
+  90   1        ssdscmd(0xa6);//--set normal display
+  91   1        ssdscmd(0xa8);//--set multiplex ratio(1 to 64)
+  92   1        ssdscmd(0x3F);//
+  93   1        ssdscmd(0xa4);//0xa4,Output follows RAM content;0xa5,Output ignores RAM content
+  94   1        ssdscmd(0xd3);//-set display offset
+  95   1        ssdscmd(0x00);//-not offset
+  96   1        ssdscmd(0xd5);//--set display clock divide ratio/oscillator frequency
+  97   1        ssdscmd(0xf0);//--set divide ratio
+  98   1        ssdscmd(0xd9);//--set pre-charge period
+  99   1        ssdscmd(0x22); //
+ 100   1        ssdscmd(0xda);//--set com pins hardware configuration
+ 101   1        ssdscmd(0x12);
+ 102   1        ssdscmd(0xdb);//--set vcomh
+ 103   1        ssdscmd(0x20);//0x20,0.77xVcc
+ 104   1        ssdscmd(0x8d);//--set DC-DC enable
+ 105   1        ssdscmd(0x14);//
+ 106   1        ssdscmd(0xaf);//--turn on oled panel 
+ 107   1      }
+ 108          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    311    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   IIC                                                               11/27/2021 13:27:57 PAGE 3   
+
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,4 @@
+".\Objects\uts.obj",
+".\Objects\spi.obj" 
+TO ".\Objects\uarttospi" 
+PRINT(".\Listings\uarttospi.m51") RAMSIZE(256) 

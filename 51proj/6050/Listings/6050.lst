@@ -1,0 +1,43 @@
+C51 COMPILER V9.60.0.0   6050                                                              10/13/2022 17:44:31 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE 6050
+OBJECT MODULE PLACED IN .\Objects\6050.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE 6050.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -6050.lst) OBJECT(.\Objects\6050.obj)
+
+line level    source
+
+   1          #include "6050.h"
+   2          
+   3          
+   4          
+   5          
+   6          
+   7          
+   8          
+   9          void Delay5us()         //@11.0592MHz
+  10          {
+  11   1              unsigned char i;
+  12   1      
+  13   1              _nop_();
+  14   1              i = 11;
+  15   1              while (--i);
+  16   1      }
+  17          
+  18          
+  19          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      6    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

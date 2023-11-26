@@ -1,0 +1,295 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/27/2021  13:27:57  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5_C51\C51\BIN\BL51.EXE .\Objects\ssd1306.obj, .\Objects\iic.obj TO .\Objects\ssd1306 PRINT (.\Listings\ssd1306.
+>> m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\ssd1306.obj (SSD1306)
+  .\Objects\iic.obj (IIC)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\ssd1306 (SSD1306)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         _DATA_GROUP_
+            IDATA   000CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0400H     UNIT         ?CO?SSD1306
+            CODE    0C00H     008CH     UNIT         ?PR?SSD1306INIT?IIC
+            CODE    0C8CH     004BH     UNIT         ?PR?MAIN?SSD1306
+            CODE    0CD7H     003EH     UNIT         ?PR?_IICS8BIT?IIC
+            CODE    0D15H     002FH     UNIT         ?PR?IICWAIT?IIC
+            CODE    0D44H     0011H     UNIT         ?PR?IICSTART?IIC
+            CODE    0D55H     0011H     UNIT         ?PR?IICSTOP?IIC
+            CODE    0D66H     000EH     UNIT         ?PR?_SSDSCMD?IIC
+            CODE    0D74H     000EH     UNIT         ?PR?_SSDSDAT?IIC
+            CODE    0D82H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0D8EH     000AH     UNIT         ?PR?_DELAY?SSD1306
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\ssd1306 (SSD1306)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?SSD1306
+
+?PR?MAIN?SSD1306               0008H    0004H
+  +--> ?PR?SSD1306INIT?IIC
+  +--> ?PR?_DELAY?SSD1306
+  +--> ?PR?_SSDSCMD?IIC
+  +--> ?CO?SSD1306
+  +--> ?PR?_SSDSDAT?IIC
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/27/2021  13:27:57  PAGE 2
+
+
+?PR?SSD1306INIT?IIC            -----    -----
+  +--> ?PR?_SSDSCMD?IIC
+
+?PR?_SSDSCMD?IIC               -----    -----
+  +--> ?PR?_IICS8BIT?IIC
+  +--> ?PR?IICWAIT?IIC
+  +--> ?PR?IICSTOP?IIC
+
+?PR?_IICS8BIT?IIC              -----    -----
+  +--> ?PR?IICSTART?IIC
+
+?PR?IICWAIT?IIC                -----    -----
+  +--> ?PR?_IICS8BIT?IIC
+
+?PR?_SSDSDAT?IIC               -----    -----
+  +--> ?PR?_IICS8BIT?IIC
+  +--> ?PR?IICWAIT?IIC
+  +--> ?PR?IICSTOP?IIC
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\ssd1306 (SSD1306)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SSD1306
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:0D8EH         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:0C8CH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  C:0800H         PUBLIC        show1
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        time
+  C:0D8EH         LINE#         71
+  C:0D8EH         LINE#         72
+  C:0D8EH         LINE#         73
+  C:0D94H         LINE#         74
+  C:0D97H         LINE#         75
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        i
+  D:0009H         SYMBOL        k
+  D:000AH         SYMBOL        x
+  D:000BH         SYMBOL        y
+  -------         ENDDO         
+  C:0C8CH         LINE#         76
+  C:0C8CH         LINE#         77
+  C:0C8CH         LINE#         79
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/27/2021  13:27:57  PAGE 3
+
+
+  C:0C8FH         LINE#         80
+  C:0C94H         LINE#         81
+  C:0C94H         LINE#         82
+  C:0C94H         LINE#         84
+  C:0CA2H         LINE#         85
+  C:0CA2H         LINE#         86
+  C:0CAAH         LINE#         87
+  C:0CAFH         LINE#         88
+  C:0CB4H         LINE#         89
+  C:0CC2H         LINE#         90
+  C:0CC2H         LINE#         91
+  C:0CCFH         LINE#         92
+  C:0CD3H         LINE#         93
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SSD1306
+
+  -------         MODULE        IIC
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0D55H         PUBLIC        iicstop
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:0CDEH         PUBLIC        _iics8bit
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:0090H.1       PUBLIC        sda
+  B:0090H.0       PUBLIC        scl
+  C:0C00H         PUBLIC        ssd1306init
+  D:00C8H         PUBLIC        T2CON
+  C:0D44H         PUBLIC        iicstart
+  C:0D20H         PUBLIC        iicwait
+  C:0D66H         PUBLIC        _ssdscmd
+  C:0D74H         PUBLIC        _ssdsdat
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          IICSTART
+  C:0D44H         LINE#         3
+  C:0D44H         LINE#         4
+  C:0D44H         LINE#         5
+  C:0D46H         LINE#         6
+  C:0D48H         LINE#         7
+  C:0D4DH         LINE#         8
+  C:0D4FH         LINE#         9
+  C:0D54H         LINE#         10
+  -------         ENDPROC       IICSTART
+  -------         PROC          IICSTOP
+  C:0D55H         LINE#         11
+  C:0D55H         LINE#         12
+  C:0D55H         LINE#         14
+  C:0D57H         LINE#         15
+  C:0D59H         LINE#         16
+  C:0D5EH         LINE#         17
+  C:0D60H         LINE#         18
+  C:0D65H         LINE#         19
+  -------         ENDPROC       IICSTOP
+  -------         PROC          L?0014
+  -------         ENDPROC       L?0014
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/27/2021  13:27:57  PAGE 4
+
+
+  -------         PROC          _IICS8BIT
+  D:0007H         SYMBOL        da
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0CDEH         LINE#         20
+  C:0CDEH         LINE#         21
+  C:0CDEH         LINE#         23
+  C:0CE0H         LINE#         24
+  C:0CE5H         LINE#         25
+  C:0CF1H         LINE#         26
+  C:0CF1H         LINE#         27
+  C:0CFCH         LINE#         28
+  C:0D00H         LINE#         29
+  C:0D05H         LINE#         30
+  C:0D07H         LINE#         31
+  C:0D0CH         LINE#         32
+  C:0D0EH         LINE#         33
+  C:0D11H         LINE#         34
+  C:0D14H         LINE#         35
+  -------         ENDPROC       _IICS8BIT
+  -------         PROC          L?0013
+  -------         ENDPROC       L?0013
+  -------         PROC          IICWAIT
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:0D20H         LINE#         36
+  C:0D20H         LINE#         37
+  C:0D20H         LINE#         38
+  C:0D22H         LINE#         39
+  C:0D24H         LINE#         40
+  C:0D29H         LINE#         41
+  C:0D2BH         LINE#         42
+  C:0D30H         LINE#         43
+  C:0D39H         LINE#         44
+  C:0D39H         LINE#         45
+  C:0D3BH         LINE#         46
+  C:0D3DH         LINE#         47
+  C:0D3FH         LINE#         48
+  C:0D43H         LINE#         49
+  -------         ENDPROC       IICWAIT
+  -------         PROC          _SSDSCMD
+  D:0005H         SYMBOL        cmd
+  C:0D66H         LINE#         51
+  C:0D66H         LINE#         52
+  C:0D66H         LINE#         53
+  C:0D66H         LINE#         54
+  C:0D69H         LINE#         55
+  C:0D6CH         LINE#         56
+  C:0D6EH         LINE#         57
+  C:0D6EH         LINE#         58
+  C:0D6EH         LINE#         59
+  C:0D71H         LINE#         60
+  -------         ENDPROC       _SSDSCMD
+  -------         PROC          _SSDSDAT
+  D:0005H         SYMBOL        dat
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/27/2021  13:27:57  PAGE 5
+
+
+  C:0D74H         LINE#         62
+  C:0D74H         LINE#         63
+  C:0D74H         LINE#         64
+  C:0D74H         LINE#         65
+  C:0D77H         LINE#         66
+  C:0D7AH         LINE#         67
+  C:0D7CH         LINE#         68
+  C:0D7CH         LINE#         69
+  C:0D7CH         LINE#         70
+  C:0D7FH         LINE#         71
+  -------         ENDPROC       _SSDSDAT
+  -------         PROC          SSD1306INIT
+  C:0C00H         LINE#         73
+  C:0C00H         LINE#         74
+  C:0C00H         LINE#         79
+  C:0C05H         LINE#         80
+  C:0C0AH         LINE#         81
+  C:0C0FH         LINE#         82
+  C:0C14H         LINE#         83
+  C:0C19H         LINE#         84
+  C:0C1EH         LINE#         85
+  C:0C23H         LINE#         86
+  C:0C28H         LINE#         87
+  C:0C2DH         LINE#         88
+  C:0C32H         LINE#         89
+  C:0C37H         LINE#         90
+  C:0C3CH         LINE#         91
+  C:0C41H         LINE#         92
+  C:0C46H         LINE#         93
+  C:0C4BH         LINE#         94
+  C:0C50H         LINE#         95
+  C:0C55H         LINE#         96
+  C:0C5AH         LINE#         97
+  C:0C5FH         LINE#         98
+  C:0C64H         LINE#         99
+  C:0C69H         LINE#         100
+  C:0C6EH         LINE#         101
+  C:0C73H         LINE#         102
+  C:0C78H         LINE#         103
+  C:0C7DH         LINE#         104
+  C:0C82H         LINE#         105
+  C:0C87H         LINE#         106
+  -------         ENDPROC       SSD1306INIT
+  -------         ENDMOD        IIC
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 058CH BYTE (69%) *
+******************************************************************************
+
+Program Size: data=13.0 xdata=0 code=1435
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

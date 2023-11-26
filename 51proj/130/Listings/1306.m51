@@ -1,0 +1,555 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    01/18/2023  23:24:13  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5_C51\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\iic.obj TO .\Objects\1306 PRINT (.\Listings\1306.m51) RAMS
+>> IZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  .\Objects\iic.obj (IIC)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C?CLDPTR)
+
+
+LINK MAP OF MODULE:  .\Objects\1306 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0007H     UNIT         _DATA_GROUP_
+                    000FH     0011H                  *** GAP ***
+            DATA    0020H     0001H     BIT_ADDR     ?BA?IIC
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     03B5H     UNIT         ?PR?LTYD?IIC
+            CODE    03B8H     0140H     UNIT         ?CO?IIC
+            CODE    04F8H     0078H     UNIT         ?PR?SSD1306_INIT?IIC
+            CODE    0570H     0056H     UNIT         ?PR?_SSD1306_DRAWCH?IIC
+            CODE    05C6H     0050H     UNIT         ?PR?_IIC_SEND?IIC
+            CODE    0616H     0049H     UNIT         ?PR?MAIN?MAIN
+            CODE    065FH     0032H     UNIT         ?PR?_SSD1306_WRITEDATA?IIC
+            CODE    0691H     002DH     UNIT         ?PR?SSD1306_CLEAR?IIC
+            CODE    06BEH     002BH     UNIT         ?PR?_DELAY?MAIN
+            CODE    06E9H     0024H     UNIT         ?PR?_SSD1306_SETCOLADDR?IIC
+            CODE    070DH     0019H     UNIT         ?C?LIB_CODE
+            CODE    0726H     0016H     UNIT         ?PR?_SSD1306_SETPOS?IIC
+            CODE    073CH     0015H     UNIT         ?PR?_SSD1306_SETPAGEADDR?IIC
+            CODE    0751H     0014H     UNIT         ?CO?MAIN
+            CODE    0765H     0012H     UNIT         ?PR?_SSD1306_WRITECMD?IIC
+            CODE    0777H     000CH     UNIT         ?PR?_SSD1306_SETCON?IIC
+            CODE    0783H     000CH     UNIT         ?C_C51STARTUP
+            CODE    078FH     0007H     UNIT         ?PR?IIC_START?IIC
+            CODE    0796H     0007H     UNIT         ?PR?IIC_STOP?IIC
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1306 (MAIN)
+
+
+SEGMENT                                DATA_GROUP 
+  +--> CALLED SEGMENT                START    LENGTH
+----------------------------------------------------
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/18/2023  23:24:13  PAGE 2
+
+
+?C_C51STARTUP                        -----    -----
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN                        0008H    0004H
+  +--> ?PR?_DELAY?MAIN
+  +--> ?PR?SSD1306_INIT?IIC
+  +--> ?PR?SSD1306_CLEAR?IIC
+  +--> ?PR?_SSD1306_DRAWCH?IIC
+  +--> ?PR?_SSD1306_SETCON?IIC
+
+?PR?SSD1306_INIT?IIC                 -----    -----
+  +--> ?PR?_SSD1306_WRITECMD?IIC
+
+?PR?_SSD1306_WRITECMD?IIC            -----    -----
+  +--> ?PR?_IIC_SEND?IIC
+  +--> ?PR?IIC_STOP?IIC
+
+?PR?_IIC_SEND?IIC                    -----    -----
+  +--> ?PR?IIC_START?IIC
+
+?PR?SSD1306_CLEAR?IIC                -----    -----
+  +--> ?PR?_SSD1306_SETPAGEADDR?IIC
+  +--> ?PR?_SSD1306_SETCOLADDR?IIC
+  +--> ?PR?_IIC_SEND?IIC
+  +--> ?PR?IIC_STOP?IIC
+
+?PR?_SSD1306_SETPAGEADDR?IIC         -----    -----
+  +--> ?PR?_SSD1306_WRITECMD?IIC
+
+?PR?_SSD1306_SETCOLADDR?IIC          -----    -----
+  +--> ?PR?_SSD1306_SETPAGEADDR?IIC
+  +--> ?PR?_SSD1306_WRITECMD?IIC
+
+?PR?_SSD1306_DRAWCH?IIC              000CH    0003H
+  +--> ?PR?_SSD1306_SETPOS?IIC
+  +--> ?PR?_SSD1306_SETCOLADDR?IIC
+  +--> ?CO?IIC
+  +--> ?PR?_SSD1306_WRITEDATA?IIC
+
+?PR?_SSD1306_SETPOS?IIC              -----    -----
+  +--> ?PR?_SSD1306_SETPAGEADDR?IIC
+  +--> ?PR?_SSD1306_SETCOLADDR?IIC
+
+?PR?_SSD1306_WRITEDATA?IIC           -----    -----
+  +--> ?PR?_SSD1306_SETPOS?IIC
+  +--> ?CO?IIC
+  +--> ?PR?_IIC_SEND?IIC
+
+?PR?_SSD1306_SETCON?IIC              -----    -----
+  +--> ?PR?_SSD1306_WRITECMD?IIC
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1306 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/18/2023  23:24:13  PAGE 3
+
+
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0096H         PUBLIC        P2M0
+  D:0095H         PUBLIC        P2M1
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:06DEH         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:0751H         PUBLIC        buff
+  C:0616H         PUBLIC        main
+  B:00A0H.0       PUBLIC        P20
+  B:00A0H.1       PUBLIC        P21
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          L?0008
+  -------         ENDPROC       L?0008
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  C:06DEH         LINE#         8
+  C:06DEH         LINE#         9
+  C:06DEH         LINE#         10
+  C:06E8H         LINE#         11
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:0616H         LINE#         12
+  C:0616H         LINE#         13
+  C:0616H         LINE#         14
+  C:061FH         LINE#         15
+  C:0622H         LINE#         16
+  C:0624H         LINE#         17
+  C:0626H         LINE#         18
+  C:0628H         LINE#         19
+  C:062FH         LINE#         20
+  C:0632H         LINE#         21
+  C:0635H         LINE#         24
+  C:063EH         LINE#         25
+  C:0643H         LINE#         26
+  C:0643H         LINE#         27
+  C:0643H         LINE#         28
+  C:0648H         LINE#         29
+  C:064BH         LINE#         30
+  C:0650H         LINE#         31
+  C:0653H         LINE#         55
+  C:065DH         LINE#         56
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        IIC
+  C:0000H         SYMBOL        _ICE_DUMMY_
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/18/2023  23:24:13  PAGE 4
+
+
+  C:0691H         PUBLIC        SSD1306_Clear
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:04F8H         PUBLIC        SSD1306_Init
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:0020H.0       PUBLIC        buffb0
+  B:0020H.1       PUBLIC        buffb1
+  B:0020H.2       PUBLIC        buffb2
+  B:0020H.3       PUBLIC        buffb3
+  B:0020H.4       PUBLIC        buffb4
+  B:0020H.5       PUBLIC        buffb5
+  B:0020H.6       PUBLIC        buffb6
+  B:0020H.7       PUBLIC        buffb7
+  C:0003H         PUBLIC        ltyd
+  C:066EH         PUBLIC        _SSD1306_WriteDATA
+  C:073CH         PUBLIC        _SSD1306_SetPageAddr
+  C:05CBH         PUBLIC        _IIC_Send
+  C:078FH         PUBLIC        IIC_Start
+  C:03B8H         PUBLIC        Font_num
+  C:0570H         PUBLIC        _SSD1306_DrawCh
+  B:00A0H.3       PUBLIC        SDA
+  C:0458H         PUBLIC        lty
+  D:0020H         PUBLIC        Buffer
+  C:0796H         PUBLIC        IIC_Stop
+  C:06F8H         PUBLIC        _SSD1306_SetColAddr
+  B:00A0H.2       PUBLIC        SCL
+  C:0777H         PUBLIC        _SSD1306_SetCon
+  D:00C8H         PUBLIC        T2CON
+  C:0726H         PUBLIC        _SSD1306_SetPos
+  C:0765H         PUBLIC        _SSD1306_WriteCMD
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          IIC_START
+  C:078FH         LINE#         58
+  C:078FH         LINE#         59
+  C:078FH         LINE#         60
+  C:0791H         LINE#         61
+  C:0793H         LINE#         62
+  C:0795H         LINE#         63
+  -------         ENDPROC       IIC_START
+  -------         PROC          IIC_STOP
+  C:0796H         LINE#         64
+  C:0796H         LINE#         65
+  C:0796H         LINE#         66
+  C:0798H         LINE#         67
+  C:079AH         LINE#         68
+  C:079CH         LINE#         69
+  -------         ENDPROC       IIC_STOP
+  C:05C6H         SYMBOL        L?0028
+  -------         PROC          L?0027
+  -------         ENDPROC       L?0027
+  C:05C6H         SYMBOL        L?0028
+  -------         PROC          _IIC_SEND
+  D:0007H         SYMBOL        dat
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/18/2023  23:24:13  PAGE 5
+
+
+  C:05CBH         LINE#         70
+  C:05CBH         LINE#         71
+  C:05CBH         LINE#         72
+  C:05CDH         LINE#         73
+  C:05CFH         LINE#         74
+  C:05D3H         LINE#         75
+  C:05D5H         LINE#         76
+  C:05D7H         LINE#         77
+  C:05DBH         LINE#         78
+  C:05DDH         LINE#         79
+  C:05DFH         LINE#         80
+  C:05E3H         LINE#         81
+  C:05E5H         LINE#         82
+  C:05E7H         LINE#         83
+  C:05EBH         LINE#         84
+  C:05EDH         LINE#         85
+  C:05EFH         LINE#         86
+  C:05F3H         LINE#         87
+  C:05F5H         LINE#         88
+  C:05F7H         LINE#         89
+  C:05FBH         LINE#         90
+  C:05FDH         LINE#         91
+  C:05FFH         LINE#         92
+  C:0603H         LINE#         93
+  C:0605H         LINE#         94
+  C:0607H         LINE#         95
+  C:060BH         LINE#         96
+  C:060DH         LINE#         99
+  C:060FH         LINE#         100
+  C:0611H         LINE#         101
+  C:0613H         LINE#         102
+  C:0615H         LINE#         103
+  -------         ENDPROC       _IIC_SEND
+  -------         PROC          _SSD1306_WRITECMD
+  D:0006H         SYMBOL        CMD
+  C:0765H         LINE#         104
+  C:0767H         LINE#         105
+  C:0767H         LINE#         106
+  C:0767H         LINE#         107
+  C:076AH         LINE#         108
+  C:076FH         LINE#         109
+  C:0774H         LINE#         110
+  -------         ENDPROC       _SSD1306_WRITECMD
+  C:065FH         SYMBOL        L?0023
+  C:0668H         SYMBOL        L?0024
+  C:066AH         SYMBOL        L?0025
+  -------         PROC          L?0022
+  -------         ENDPROC       L?0022
+  C:065FH         SYMBOL        L?0023
+  C:0668H         SYMBOL        L?0024
+  C:066AH         SYMBOL        L?0025
+  -------         PROC          _SSD1306_WRITEDATA
+  D:0001H         SYMBOL        dat
+  D:0004H         SYMBOL        count
+  C:066EH         LINE#         112
+  C:066EH         LINE#         113
+  C:066EH         LINE#         114
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/18/2023  23:24:13  PAGE 6
+
+
+  C:066EH         LINE#         115
+  C:0671H         LINE#         116
+  C:0676H         LINE#         117
+  C:0680H         LINE#         118
+  C:0680H         LINE#         119
+  C:0687H         LINE#         120
+  C:068EH         LINE#         121
+  C:0690H         LINE#         122
+  -------         ENDPROC       _SSD1306_WRITEDATA
+  -------         PROC          SSD1306_INIT
+  C:04F8H         LINE#         123
+  C:04F8H         LINE#         124
+  C:04F8H         LINE#         125
+  C:04FDH         LINE#         126
+  C:0502H         LINE#         127
+  C:0507H         LINE#         128
+  C:050CH         LINE#         129
+  C:0511H         LINE#         130
+  C:0516H         LINE#         131
+  C:051BH         LINE#         132
+  C:0520H         LINE#         133
+  C:0525H         LINE#         135
+  C:052AH         LINE#         136
+  C:052FH         LINE#         137
+  C:0534H         LINE#         138
+  C:0539H         LINE#         140
+  C:053EH         LINE#         141
+  C:0543H         LINE#         143
+  C:0548H         LINE#         144
+  C:054DH         LINE#         145
+  C:0552H         LINE#         147
+  C:0557H         LINE#         148
+  C:055CH         LINE#         151
+  C:0561H         LINE#         152
+  C:0566H         LINE#         155
+  C:056BH         LINE#         156
+  -------         ENDPROC       SSD1306_INIT
+  -------         PROC          _SSD1306_SETPAGEADDR
+  D:0004H         SYMBOL        StartAddr
+  D:0005H         SYMBOL        EndAddr
+  C:073CH         LINE#         162
+  C:073EH         LINE#         163
+  C:073EH         LINE#         164
+  C:0743H         LINE#         165
+  C:074AH         LINE#         166
+  -------         ENDPROC       _SSD1306_SETPAGEADDR
+  -------         PROC          L?0026
+  -------         ENDPROC       L?0026
+  -------         PROC          _SSD1306_SETCOLADDR
+  D:0004H         SYMBOL        StartAddr
+  D:0005H         SYMBOL        EndAddr
+  C:06F8H         LINE#         169
+  C:06FAH         LINE#         170
+  C:06FAH         LINE#         171
+  C:06FFH         LINE#         172
+  C:0706H         LINE#         173
+  -------         ENDPROC       _SSD1306_SETCOLADDR
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/18/2023  23:24:13  PAGE 7
+
+
+  -------         PROC          SSD1306_CLEAR
+  -------         DO            
+  D:0002H         SYMBOL        i
+  -------         ENDDO         
+  C:0691H         LINE#         175
+  C:0691H         LINE#         176
+  C:0691H         LINE#         177
+  C:0695H         LINE#         178
+  C:069CH         LINE#         179
+  C:06A3H         LINE#         180
+  C:06A3H         LINE#         181
+  C:06A6H         LINE#         182
+  C:06AAH         LINE#         183
+  C:06B4H         LINE#         184
+  C:06B4H         LINE#         185
+  C:06B9H         LINE#         186
+  C:06BBH         LINE#         187
+  -------         ENDPROC       SSD1306_CLEAR
+  -------         PROC          _SSD1306_SETPOS
+  D:0003H         SYMBOL        x
+  D:0006H         SYMBOL        y
+  C:0726H         LINE#         189
+  C:072AH         LINE#         190
+  C:072AH         LINE#         191
+  C:0731H         LINE#         192
+  -------         ENDPROC       _SSD1306_SETPOS
+  -------         PROC          _SSD1306_DRAWCH
+  D:000CH         SYMBOL        ch
+  D:000DH         SYMBOL        x
+  D:000EH         SYMBOL        y
+  C:0570H         LINE#         195
+  C:0576H         LINE#         196
+  C:0576H         LINE#         197
+  C:0580H         LINE#         198
+  C:058EH         LINE#         199
+  C:058EH         LINE#         200
+  C:0594H         LINE#         201
+  C:0598H         LINE#         202
+  C:059BH         LINE#         203
+  C:05ACH         LINE#         204
+  C:05B1H         LINE#         205
+  C:05B4H         LINE#         206
+  C:05C5H         LINE#         207
+  C:05C5H         LINE#         209
+  -------         ENDPROC       _SSD1306_DRAWCH
+  -------         PROC          _SSD1306_SETCON
+  D:0005H         SYMBOL        Contrast
+  C:0777H         LINE#         210
+  C:0779H         LINE#         211
+  C:0779H         LINE#         212
+  C:077EH         LINE#         213
+  -------         ENDPROC       _SSD1306_SETCON
+  -------         PROC          LTYD
+  C:0003H         LINE#         216
+  C:0003H         LINE#         217
+  C:0003H         LINE#         218
+  C:0009H         LINE#         219
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/18/2023  23:24:13  PAGE 8
+
+
+  C:0016H         LINE#         220
+  C:001DH         LINE#         221
+  C:002AH         LINE#         222
+  C:0031H         LINE#         223
+  C:003EH         LINE#         224
+  C:0045H         LINE#         225
+  C:0052H         LINE#         226
+  C:0059H         LINE#         227
+  C:0066H         LINE#         228
+  C:006DH         LINE#         229
+  C:007AH         LINE#         230
+  C:0081H         LINE#         231
+  C:008EH         LINE#         232
+  C:0095H         LINE#         233
+  C:00A2H         LINE#         235
+  C:00A9H         LINE#         236
+  C:00B6H         LINE#         237
+  C:00BDH         LINE#         238
+  C:00CAH         LINE#         239
+  C:00D1H         LINE#         240
+  C:00DEH         LINE#         241
+  C:00E5H         LINE#         242
+  C:00F2H         LINE#         243
+  C:00F9H         LINE#         244
+  C:0106H         LINE#         245
+  C:010DH         LINE#         246
+  C:011AH         LINE#         247
+  C:0121H         LINE#         248
+  C:012EH         LINE#         249
+  C:0135H         LINE#         250
+  C:0142H         LINE#         252
+  C:0149H         LINE#         253
+  C:0156H         LINE#         254
+  C:015DH         LINE#         255
+  C:016AH         LINE#         256
+  C:0171H         LINE#         257
+  C:017EH         LINE#         258
+  C:0185H         LINE#         259
+  C:0192H         LINE#         260
+  C:0199H         LINE#         261
+  C:01A6H         LINE#         262
+  C:01ADH         LINE#         263
+  C:01BAH         LINE#         264
+  C:01C1H         LINE#         265
+  C:01CEH         LINE#         266
+  C:01D5H         LINE#         267
+  C:01E2H         LINE#         269
+  C:01E4H         LINE#         270
+  C:01E7H         LINE#         271
+  C:01EEH         LINE#         272
+  C:01F5H         LINE#         273
+  C:01F7H         LINE#         274
+  C:01FAH         LINE#         275
+  C:0201H         LINE#         276
+  C:020AH         LINE#         277
+  C:020CH         LINE#         278
+  C:020FH         LINE#         279
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/18/2023  23:24:13  PAGE 9
+
+
+  C:0216H         LINE#         280
+  C:021FH         LINE#         281
+  C:0221H         LINE#         282
+  C:0224H         LINE#         283
+  C:022BH         LINE#         284
+  C:0234H         LINE#         286
+  C:023BH         LINE#         287
+  C:0244H         LINE#         288
+  C:024BH         LINE#         289
+  C:0254H         LINE#         290
+  C:025BH         LINE#         291
+  C:0264H         LINE#         292
+  C:026BH         LINE#         293
+  C:0274H         LINE#         294
+  C:027BH         LINE#         295
+  C:0284H         LINE#         296
+  C:028BH         LINE#         297
+  C:0294H         LINE#         298
+  C:029BH         LINE#         299
+  C:02A4H         LINE#         300
+  C:02ABH         LINE#         301
+  C:02B4H         LINE#         303
+  C:02BBH         LINE#         304
+  C:02C4H         LINE#         305
+  C:02CBH         LINE#         306
+  C:02D4H         LINE#         307
+  C:02DBH         LINE#         308
+  C:02E4H         LINE#         309
+  C:02EBH         LINE#         310
+  C:02F4H         LINE#         311
+  C:02FBH         LINE#         312
+  C:0304H         LINE#         313
+  C:030BH         LINE#         314
+  C:0314H         LINE#         315
+  C:031BH         LINE#         316
+  C:0324H         LINE#         317
+  C:032BH         LINE#         318
+  C:0334H         LINE#         320
+  C:033BH         LINE#         321
+  C:0344H         LINE#         322
+  C:034BH         LINE#         323
+  C:0354H         LINE#         324
+  C:035BH         LINE#         325
+  C:0364H         LINE#         326
+  C:036BH         LINE#         327
+  C:0374H         LINE#         328
+  C:037BH         LINE#         329
+  C:0384H         LINE#         330
+  C:038BH         LINE#         331
+  C:0394H         LINE#         332
+  C:039BH         LINE#         333
+  C:03A4H         LINE#         334
+  C:03ABH         LINE#         335
+  -------         ENDPROC       LTYD
+  -------         ENDMOD        IIC
+
+  -------         MODULE        ?C?CLDPTR
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/18/2023  23:24:13  PAGE 10
+
+
+  C:070DH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LTYD?IIC
+
+Program Size: data=17.0 xdata=0 code=1949
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

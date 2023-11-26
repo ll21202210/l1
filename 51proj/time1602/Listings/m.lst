@@ -1,0 +1,180 @@
+C51 COMPILER V9.60.0.0   M                                                                 01/02/2022 18:47:38 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE M
+OBJECT MODULE PLACED IN .\Objects\m.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE m.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\m.l
+                    -st) TABS(2) OBJECT(.\Objects\m.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          #include "ds1302.h"
+   5          #include "16.h"
+   6          
+   7          #define u8 unsigned char
+   8          #define u16 unsigned int
+   9          
+  10          u8 hanzi[6][8] = {{0x08,0x1F,0x0E,0x0C,0x1F,0x04,0x04,0x00},//年
+  11          {0x0F,0x09,0x0F,0x09,0x0F,0x09,0x13,0x00},//月
+  12          {0x0F,0x09,0x09,0x0F,0x09,0x09,0x0F,0x00},//日
+  13          {0x0E,0x0E,0x0E,0x14,0x0E,0x04,0x1F,0x00},//星
+  14          {0x0B,0x1F,0x0B,0x0B,0x1F,0x15,0x03,0x00},//期
+  15          {0x1F,0x04,0x04,0x1F,0x04,0x0A,0x11,0x00}}; //天
+  16          u8 ddata1[16] = {'2','0','2','0',0x00,' ','0','1',0x01,'0','1',0x02,' ',' ',' ',' '};
+  17          u8 ddata2[16] = {'1','2',':','0','0',':','0','0',' ',0x03,0x04,'1',' ',' ',' ',' '};
+  18          u8 ascii[] = {'0','1','2','3','4','5','6','7','8','9'};
+  19          u8 y,m, d, h, m, s, w;
+  20          
+  21          sbit kay1 = P1^3; // 模式切换
+  22          sbit kay2 = P1^4; // 加
+  23          sbit kay3 = P1^5; // 减
+  24          
+  25          u8 mode = 0;// 0显示 1年设置 2月 3日 4时 5分 6秒
+  26          void delay(u16 t)
+  27          {
+  28   1        while(t--)
+  29   1          _nop_();
+  30   1      }
+  31          void getdate()
+  32          {
+  33   1        u8 i,tmp,ge,shi,numb;
+  34   1        for(i = 0; i < 7; i++)
+  35   1        {
+  36   2      //    tmp = DSread(second + 0x02*i + 1);
+  37   2      //    se = tmp >> 4;
+  38   2      //    ghi = tmp & 0x0f;
+  39   2      //    switch(i)
+  40   2      //    {
+  41   2      //      
+  42   2      //    }
+  43   2        }
+  44   1      }
+*** WARNING C280 IN LINE 33 OF m.c: 'tmp': unreferenced local variable
+*** WARNING C280 IN LINE 33 OF m.c: 'ge': unreferenced local variable
+*** WARNING C280 IN LINE 33 OF m.c: 'shi': unreferenced local variable
+*** WARNING C280 IN LINE 33 OF m.c: 'numb': unreferenced local variable
+  45          void datpproc() //24小时制
+  46          {
+  47   1        u8 tmp,shi,ge;
+  48   1        tmp = DSread(year + 1);
+  49   1        shi = tmp >> 4;
+  50   1        ge = tmp & 0x0f;
+C51 COMPILER V9.60.0.0   M                                                                 01/02/2022 18:47:38 PAGE 2   
+
+  51   1        ddata1[2] = ascii[shi];
+  52   1        ddata1[3] = ascii[ge];
+  53   1        
+  54   1        tmp = DSread(month + 1);
+  55   1        shi = tmp >> 4;
+  56   1        ge = tmp & 0x0f;
+  57   1        ddata1[6] = ascii[shi];
+  58   1        ddata1[7] = ascii[ge];
+  59   1        
+  60   1        tmp = DSread(day + 1);
+  61   1        shi = tmp >> 4;
+  62   1        ge = tmp & 0x0f;
+  63   1        ddata1[9] = ascii[shi];
+  64   1        ddata1[10] = ascii[ge];
+  65   1        
+  66   1        tmp = DSread(hour + 1);
+  67   1        shi = tmp >> 4;
+  68   1        ge = tmp & 0x0f;
+  69   1        ddata2[0] = ascii[shi];
+  70   1        ddata2[1] = ascii[ge];
+  71   1        
+  72   1        tmp = DSread(minute + 1);
+  73   1        shi = tmp >> 4;
+  74   1        ge = tmp & 0x0f;
+  75   1        ddata2[3] = ascii[shi];
+  76   1        ddata2[4] = ascii[ge];
+  77   1        
+  78   1        tmp = DSread(second + 1);
+  79   1        shi = tmp >> 4;
+  80   1        ge = tmp & 0x0f;
+  81   1        ddata2[6] = ascii[shi];
+  82   1        ddata2[7] = ascii[ge];
+  83   1        
+  84   1        tmp = DSread(week + 1);
+  85   1        switch(tmp) //11
+  86   1        {
+  87   2          case 1:
+  88   2            ddata2[11] = '1';
+  89   2            break;
+  90   2          case 2:
+  91   2            ddata2[11] = '2';
+  92   2            break;
+  93   2          case 3:
+  94   2            ddata2[11] = '3';
+  95   2            break;
+  96   2          case 4:
+  97   2            ddata2[11] = '4';
+  98   2            break;
+  99   2          case 5:
+ 100   2            ddata2[11] = '5';
+ 101   2            break;
+ 102   2          case 6:
+ 103   2            ddata2[11] = '6';
+ 104   2            break;
+ 105   2          case 7:
+ 106   2            ddata2[11] = 0x05;
+ 107   2            break;
+ 108   2        }
+ 109   1      }
+ 110          void Display()
+ 111          {
+ 112   1        u8 i;
+C51 COMPILER V9.60.0.0   M                                                                 01/02/2022 18:47:38 PAGE 3   
+
+ 113   1        LCM16wcmd(0x80);
+ 114   1        for(i = 0; i < 16; i++)
+ 115   1        {
+ 116   2          LCM16wdat(ddata1[i]);
+ 117   2        }
+ 118   1        LCM16wcmd(0xc0);
+ 119   1        for(i = 0; i < 16; i++)
+ 120   1        {
+ 121   2          LCM16wdat(ddata2[i]);
+ 122   2        }
+ 123   1      }
+ 124          void LCM1602Wfont()
+ 125          {
+ 126   1        u8 i,j;
+ 127   1        
+ 128   1        for(i = 0; i < 6; i++)
+ 129   1        {
+ 130   2          LCM16wcmd(0x40 + 8*i);
+ 131   2          for(j = 0; j < 8; j++)
+ 132   2          {
+ 133   3            LCM16wdat(hanzi[i][j]);
+ 134   3          }
+ 135   2          
+ 136   2        }
+ 137   1      }
+ 138          void main(void)
+ 139          {
+ 140   1        LCM1602Init();
+ 141   1        LCM1602Wfont();
+ 142   1        while(1)
+ 143   1        {
+ 144   2          Display();
+ 145   2          datpproc();
+ 146   2          delay(10000);
+ 147   2        }
+ 148   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    428    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     97       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  4 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,264 @@
+C51 COMPILER V9.60.0.0   DA_AD                                                             11/07/2021 00:04:42 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DA_AD
+OBJECT MODULE PLACED IN DA-AD.OBJ
+COMPILER INVOKED BY: C:\Keil_v5c51\C51\BIN\C51.EXE DA-AD.C OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          
+   2          /*********************************************************************************
+   3          * 【编写时间】： 2011.07.07
+   4          * 【作    者】： 雁翎电子
+   5          * 【版    本】： V1.0
+   6          * 【网    站】： http://ylelectronic.taobao.com/ 
+   7          * 【Q      Q】： 348439350
+   8          * 【声    明】： 此程序仅用于学习与参考，引用请注明版权和作者信息！
+   9          * 【函数功能】： DA-AD试验                                    
+  10          * 【使用说明】： 单片机：STC89C52 
+  11                           串口波特率：9600
+  12                   串口一共发送4个字节  
+  13                   1 光敏电阻
+  14                   2 热敏电阻
+  15                   3 悬空
+  16                   4 可调0-5V电压（蓝色电位器调节）
+  17                   
+  18          **********************************************************************************/
+  19          /********************************************************************************************/
+  20          
+  21          #include<reg52.h>    //包含单片机寄存器的头文件
+  22          #include <I2C.H>
+  23          
+  24          #define uchar unsigned char
+  25          #define  PCF8591 0x90    //PCF8591 地址
+  26          
+  27          
+  28          
+  29          // 变量定义
+  30          
+  31          unsigned long  xdata LedOut[8];
+  32          unsigned int  D[32] = {0};
+  33          sbit P2_0 = P2^0;
+  34          sbit P2_1 = P2^1;
+  35          sbit P2_2 = P2^2;
+  36          sbit P2_3 = P2^3;
+  37          
+  38          unsigned char date;
+  39          
+  40          uchar code table[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,
+  41                                  0xf8,0x80,0x90};
+  42          
+  43          
+  44            // 函数申明 
+  45          
+  46          void display();
+  47          void delay(uchar i);
+  48          bit DACconversion(unsigned char sla,unsigned char c,  unsigned char Val);
+  49          bit ISendByte(unsigned char sla,unsigned char c);
+  50          unsigned char IRcvByte(unsigned char sla);
+  51          void Initial_com(void);
+  52          void dd(unsigned char nuber)
+  53          {
+  54   1        unsigned char i;
+  55   1        for(i = 0; i<3; i++)
+C51 COMPILER V9.60.0.0   DA_AD                                                             11/07/2021 00:04:42 PAGE 2   
+
+  56   1        {
+  57   2          switch(nuber%10)
+  58   2          {
+  59   3            case 0:
+  60   3              SBUF = '0';
+  61   3              break;
+  62   3            case 1:
+  63   3              SBUF = '1';
+  64   3              break;
+  65   3            case 2:
+  66   3              SBUF = '2';
+  67   3              break;
+  68   3            case 3:
+  69   3              SBUF = '3';
+  70   3              break;
+  71   3            case 4:
+  72   3              SBUF = '4';
+  73   3              break;
+  74   3            case 5:
+  75   3              SBUF = '5';
+  76   3              break;
+  77   3            case 6:
+  78   3              SBUF = '6';
+  79   3              break;
+  80   3            case 7:
+  81   3              SBUF = '7';
+  82   3              break;
+  83   3            case 8:
+  84   3              SBUF = '8';
+  85   3              break;
+  86   3            case 9:
+  87   3              SBUF = '9';
+  88   3              break;
+  89   3          }
+  90   2          nuber /= 10;
+  91   2          delay(1000);
+  92   2        }
+  93   1      }
+  94          //******************************************************************/
+  95          main()
+  96          {  
+  97   1        unsigned char i;
+  98   1        Initial_com();
+  99   1        while(1)
+ 100   1        {
+ 101   2      
+ 102   2        /********以下AD-DA处理*************/  
+ 103   2        
+ 104   2      //      switch(AD_CHANNEL)
+ 105   2      //    {
+ 106   2      //      case 0: ISendByte(PCF8591,0x41);
+ 107   2      //           D[0]=IRcvByte(PCF8591);  //ADC0 模数转换1      光敏电阻
+ 108   2      //         break;  
+ 109   2            
+ 110   2      //      case 1: ISendByte(PCF8591,0x42);
+ 111   2      //           D[1]=IRcvByte(PCF8591);  //ADC1  模数转换2   热敏电阻
+ 112   2      //         break;  
+ 113   2      //      
+ 114   2      //      case 2: ISendByte(PCF8591,0x43);
+ 115   2      //           D[2]=IRcvByte(PCF8591);  //ADC2  模数转换3    悬空
+ 116   2      //         break;  
+ 117   2      //      
+C51 COMPILER V9.60.0.0   DA_AD                                                             11/07/2021 00:04:42 PAGE 3   
+
+ 118   2      //      case 3: ISendByte(PCF8591,0x40);
+ 119   2      //           D[3]=IRcvByte(PCF8591);  //ADC3   模数转换4     可调0-5v
+ 120   2      //         break;  
+ 121   2      //      
+ 122   2      //      case 4: DACconversion(PCF8591,0x40, D[4]); //DAC    数模转换
+ 123   2      //           break;
+ 124   2           
+ 125   2      //    }
+ 126   2      //    
+ 127   2      //    delay(1000);
+ 128   2          
+ 129   2      //      D[4]=D[3];  //把模拟输入采样的信号 通过数模转换输出
+ 130   2            
+ 131   2      //     if(++AD_CHANNEL>4) AD_CHANNEL=0;
+ 132   2        
+ 133   2           /********以下将AD的值通过串口发送出去*************/
+ 134   2          ISendByte(PCF8591,0x40);
+ 135   2          D[3]=IRcvByte(PCF8591);
+ 136   2          dd(D[3]);
+ 137   2      //   delay(1000); 
+ 138   2      //   SBUF=D[0]; 
+ 139   2      //    for(i =0;~i; i++)
+ 140   2      //    {
+ 141   2      //      DACconversion(PCF8591,0x40, i);
+ 142   2      //      delay(10);
+ 143   2      //    }
+ 144   2      //   delay(1000);     
+ 145   2      //   SBUF=D[1]; 
+ 146   2      //   delay(1000); 
+ 147   2      //   SBUF=D[2];
+ 148   2      //   delay(1000);
+ 149   2      //   SBUF=D[3];
+ 150   2      //   delay(1000);
+ 151   2      //     SBUF=0xff;
+ 152   2      //   delay(1000);
+ 153   2      //   if(RI)
+ 154   2        {
+ 155   3          date=SBUF;    //单片机接受
+ 156   3          SBUF=date;    //单片机发送
+ 157   3          RI=0;
+ 158   3        }  
+ 159   2         }
+ 160   1      }
+*** WARNING C280 IN LINE 97 OF DA-AD.C: 'i': unreferenced local variable
+ 161          
+ 162          
+ 163          void delay(uchar i)
+ 164          {
+ 165   1        uchar j,k; 
+ 166   1        for(j=i;j>0;j--)
+ 167   1          for(k=125;k>0;k--);
+ 168   1      }
+ 169          
+ 170          /*******************************************************************
+ 171          DAC 变换, 转化函数               
+ 172          *******************************************************************/
+ 173          bit DACconversion(unsigned char sla,unsigned char c,  unsigned char Val)
+ 174          {
+ 175   1         Start_I2c();              //启动总线
+ 176   1         SendByte(sla);            //发送器件地址
+ 177   1         if(ack==0)return(0);
+ 178   1         SendByte(c);              //发送控制字节
+C51 COMPILER V9.60.0.0   DA_AD                                                             11/07/2021 00:04:42 PAGE 4   
+
+ 179   1         if(ack==0)return(0);
+ 180   1         SendByte(Val);            //发送DAC的数值  
+ 181   1         if(ack==0)return(0);
+ 182   1         Stop_I2c();               //结束总线
+ 183   1         return(1);
+ 184   1      }
+ 185          
+ 186          /*******************************************************************
+ 187          ADC发送字节[命令]数据函数               
+ 188          *******************************************************************/
+ 189          bit ISendByte(unsigned char sla,unsigned char c)
+ 190          {
+ 191   1         Start_I2c();              //启动总线
+ 192   1         SendByte(sla);            //发送器件地址
+ 193   1         if(ack==0)return(0);
+ 194   1         SendByte(c);              //发送数据
+ 195   1         if(ack==0)return(0);
+ 196   1         Stop_I2c();               //结束总线
+ 197   1         return(1);
+ 198   1      }
+ 199          
+ 200          /*******************************************************************
+ 201          ADC读字节数据函数               
+ 202          *******************************************************************/
+ 203          unsigned char IRcvByte(unsigned char sla)
+ 204          {  unsigned char c;
+ 205   1      
+ 206   1         Start_I2c();          //启动总线
+ 207   1         SendByte(sla+1);      //发送器件地址
+ 208   1         if(ack==0)return(0);
+ 209   1         c=RcvByte();          //读取数据0
+ 210   1      
+ 211   1         Ack_I2c(1);           //发送非就答位
+ 212   1         Stop_I2c();           //结束总线
+ 213   1         return(c);
+ 214   1      }
+ 215          
+ 216          
+ 217          //*****串口初始化函数***********
+ 218          
+ 219          //******************************
+ 220          void Initial_com(void)
+ 221          {
+ 222   1       EA=1;        //开总中断
+ 223   1       ES=1;        //允许串口中断
+ 224   1       ET1=1;        //允许定时器T1的中断
+ 225   1       TMOD=0x20;   //定时器T1，在方式2中断产生波特率
+ 226   1       PCON=0x00;   //SMOD=0
+ 227   1       SCON=0x50;   // 方式1 由定时器控制
+ 228   1       TH1=0xfd;    //波特率设置为9600
+ 229   1       TL1=0xfd;
+ 230   1       TR1=1;       //开定时器T1运行控制位
+ 231   1      
+ 232   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    328    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =     32    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     65      10
+C51 COMPILER V9.60.0.0   DA_AD                                                             11/07/2021 00:04:42 PAGE 5   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

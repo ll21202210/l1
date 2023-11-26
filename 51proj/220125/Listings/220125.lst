@@ -1,0 +1,158 @@
+C51 COMPILER V9.60.0.0   220125                                                            01/25/2022 17:58:40 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE 220125
+OBJECT MODULE PLACED IN .\Objects\220125.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE 220125.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\220125.lst) TABS(2) OBJECT(.\Objects\220125.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          #define u8 unsigned char
+   5          #define u16 unsigned int
+   6          #define dig P0
+   7          /**
+   8          138 的 abc 插 p1 0，1，2
+   9          p0 接数码管
+  10          */
+  11          
+  12          unsigned char code smgduan[16] = {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x
+             -79,0x71};  //共阴
+  13          u8 ddata[8] = {0x00,0x3f,0x3f,0x40,0x3f,0xbf,0x3f,0x3f};
+  14          
+  15          sbit key1 = P2^0;
+  16          sbit key2 = P2^1;
+  17          sbit key3 = P2^2;
+  18          
+  19          u16 dms;
+  20          u8 trun = 0,minute,td = 1,kdown = 0;
+  21          
+  22          void delay(u16 t)
+  23          {
+  24   1        while(t--)
+  25   1          _nop_();
+  26   1      }
+  27          void TimerInit(void)
+  28          {
+  29   1        TMOD = 0x10;
+  30   1        EA = 1;
+  31   1        ET1 = 1;
+  32   1        TR1 = 1;
+  33   1        TH1 = 0Xd8;
+  34   1        TL1 = 0Xf0;
+  35   1      }
+  36          
+  37          void KeyScan(void)
+  38          {
+  39   1        
+  40   1        if(key1 == 0)
+  41   1        {
+  42   2          delay(50);
+  43   2          if(key1 == 0 && kdown == 0)
+  44   2          {
+  45   3            if(trun == 1)
+  46   3              trun = 0;
+  47   3            else
+  48   3              trun = 1;
+  49   3          }
+  50   2        }
+  51   1        if(key2 == 0)
+  52   1        {
+  53   2          delay(50);
+C51 COMPILER V9.60.0.0   220125                                                            01/25/2022 17:58:40 PAGE 2   
+
+  54   2          if(key2 == 0 && kdown == 0)
+  55   2          {
+  56   3            if(td == 1)
+  57   3              td = 0;
+  58   3            else
+  59   3              td = 1;
+  60   3          }
+  61   2        }
+  62   1        if(key3 == 0)
+  63   1        {
+  64   2          delay(50);
+  65   2          if(key3 == 0 && kdown == 0)
+  66   2          {
+  67   3            trun = 0;
+  68   3            dms = 0;
+  69   3            minute = 0;
+  70   3            td = 1;
+  71   3          }
+  72   2        }
+  73   1        if(!key1 || !key2 || !key3)
+  74   1          kdown = 1;
+  75   1        else
+  76   1          kdown = 0;
+  77   1      }
+  78          void ddatproc()
+  79          {
+  80   1        ddata[7] = smgduan[dms%10];// 百分位
+  81   1        ddata[6] = smgduan[(dms/10)%10];// 十分位
+  82   1        ddata[5] = smgduan[(dms/100)%10]; //个
+  83   1        ddata[4] = smgduan[(dms/1000)%10]; // 十
+  84   1        ddata[5] |= 0x80; // 小数点
+  85   1        ddata[2] = smgduan[minute%10];
+  86   1        ddata[1] = smgduan[(minute/10)%10];
+  87   1      }
+  88          void Display(void)
+  89          {
+  90   1        u8 i; 
+  91   1        for(i = 0; i < 8; i++)
+  92   1        {
+  93   2          P1 &= 0xf8;
+  94   2          P1 |= i;
+  95   2          dig = ddata[i];
+  96   2          delay(20);
+  97   2          dig = 0x00;
+  98   2        }
+  99   1      }
+ 100          
+ 101          void main(void)
+ 102          {
+ 103   1        dms = 0;
+ 104   1        minute = 0;
+ 105   1        TimerInit();
+ 106   1        while(1)
+ 107   1        {
+ 108   2          KeyScan();
+ 109   2          if(td)
+ 110   2          ddatproc();
+ 111   2          Display();
+ 112   2          
+ 113   2        }
+ 114   1      }
+ 115          void irq3(void) interrupt 3
+C51 COMPILER V9.60.0.0   220125                                                            01/25/2022 17:58:40 PAGE 3   
+
+ 116          {
+ 117   1        TH1 = 0Xd8;
+ 118   1        TL1 = 0Xf0;
+ 119   1        if(trun)
+ 120   1        {
+ 121   2          dms ++;
+ 122   2          if(dms == 6000)
+ 123   2          {
+ 124   3            dms = 0;
+ 125   3            minute++;
+ 126   3          }
+ 127   2        }
+ 128   1      }
+ 129          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    388    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

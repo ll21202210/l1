@@ -1,0 +1,3 @@
+".\Objects\zuoye.obj" 
+TO ".\Objects\zuoye" 
+PRINT(".\Listings\zuoye.m51") RAMSIZE(256) 

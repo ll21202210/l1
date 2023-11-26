@@ -1,0 +1,115 @@
+C51 COMPILER V9.60.0.0   IIC                                                               12/10/2021 20:44:51 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE IIC
+OBJECT MODULE PLACED IN iic.OBJ
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE iic.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include "iic.h"
+   4          
+   5          void iicstart(void)
+   6          {
+   7   1        dio = 1;
+   8   1        clk = 1;
+   9   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  10   1        dio = 0;
+  11   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  12   1      }
+  13          void iicstop(void)
+  14          {
+  15   1        
+  16   1        dio = 0;
+  17   1        clk = 1;
+  18   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  19   1        dio = 1;
+  20   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  21   1      }
+  22          void iics8bit(u8 da)
+  23          {
+  24   1        u8 i;
+  25   1        clk = 0;
+  26   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  27   1        for(i = 0; i<8; i++)
+  28   1        {
+  29   2          dio = da>>7;
+  30   2          da = da<<1;
+  31   2          _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  32   2          clk = 1;
+  33   2          _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  34   2          clk = 0;
+  35   2          _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  36   2        }
+  37   1      }
+  38          void iicresp(u8 i)
+  39          {
+  40   1        if(i)
+  41   1          dio = 1;
+  42   1        else
+  43   1          dio = 0;
+  44   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  45   1        clk = 1;
+  46   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  47   1        clk = 0;
+  48   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  49   1        dio = 1;
+  50   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  51   1      }
+  52          
+  53          u8 iicread8bit(void)
+  54          {
+  55   1        u8 dat,i;
+C51 COMPILER V9.60.0.0   IIC                                                               12/10/2021 20:44:51 PAGE 2   
+
+  56   1        clk = 0;
+  57   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  58   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  59   1        dio = 1; //释放
+  60   1        
+  61   1        for(i = 0; i<8; i++)
+  62   1        {
+  63   2          dat = dat<<1;
+  64   2          clk = 1;
+  65   2          _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  66   2          dat |= dio;
+  67   2          _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  68   2          clk = 0;
+  69   2          _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  70   2        }
+  71   1        return dat;
+  72   1      }
+  73          void iicwait(void)
+  74          {
+  75   1        u8 i = 250;
+  76   1        dio = 1;
+  77   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  78   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  79   1        clk = 1;
+  80   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  81   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  82   1        while(dio && i--)
+  83   1        {
+  84   2          _nop_();_nop_();_nop_();_nop_(); 
+  85   2        } //1ms
+  86   1        if(i == 0)
+  87   1          led = 0;
+  88   1        clk = 0;
+  89   1        _nop_();_nop_();_nop_();_nop_();_nop_(); //5us
+  90   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    238    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

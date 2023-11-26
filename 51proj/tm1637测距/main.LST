@@ -1,0 +1,181 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              02/03/2023 21:32:16 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          typedef unsigned int u16;
+   4          typedef unsigned char u8;
+   5          u16 time = 0;
+   6          u16 tt = 0;
+   7          sbit clk = P1^0;
+   8          sbit dio = P1^1;
+   9          sbit tri = P1^3;
+  10          sbit ssss= P3^2;
+  11          
+  12          unsigned char code sduan[16] = {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79
+             -,0x71};        //¹²Òõ
+  13          
+  14          u8  code smgd[12] = {0x3f,0x06,0x5b,0x4f,0x66,\
+  15          0x6d,0x7d,0x07,0x7f,0x6f,0x5f,0x38};
+  16          u8 da[4] = {0x3f,0x06,0x5f,0x38};//4wei 
+  17          //sbit kk = P3^2;
+  18          
+  19          void delay(u16 ti)
+  20          {
+  21   1              while(ti--)
+  22   1                      _nop_();
+  23   1                      
+  24   1      }
+  25          
+  26          
+  27          void tmst(void)
+  28          {
+  29   1              clk = 1;
+  30   1              dio  =1;
+  31   1              delay(2);
+  32   1              dio = 0;
+  33   1              delay(2);
+  34   1              
+  35   1      }
+  36          void tmstp(void)
+  37          {
+  38   1              clk = 0;
+  39   1              delay(2);
+  40   1              dio = 0;
+  41   1              delay(2);
+  42   1              clk = 1;
+  43   1              delay(2);
+  44   1              dio = 1;
+  45   1              delay(2);
+  46   1      }
+  47          void tmack(void)
+  48          {
+  49   1              u16 ii = 0;
+  50   1              clk = 0;
+  51   1              dio = 1;
+  52   1              delay(5);
+  53   1              while(dio)
+  54   1                      {
+C51 COMPILER V9.60.0.0   MAIN                                                              02/03/2023 21:32:16 PAGE 2   
+
+  55   2                              ii++;
+  56   2                              if(ii > 100)
+  57   2                                      break;
+  58   2                      }
+  59   1              clk = 1;
+  60   1              delay(5);
+  61   1              clk = 0;
+  62   1      }
+  63          void tmwbyte(u8 daa)
+  64          {
+  65   1              u8 i;
+  66   1              for(i = 0; i<8; i++)
+  67   1              {
+  68   2                      clk = 0;
+  69   2                      
+  70   2                      dio = daa & 0x01;
+  71   2                      daa = daa >>1;
+  72   2                      delay(5);
+  73   2                      clk = 1;
+  74   2                      delay(5);
+  75   2              }
+  76   1              
+  77   1      }
+  78          void smgw(void)
+  79          {
+  80   1              u8 i;
+  81   1              tmst();
+  82   1              tmwbyte(0x40);
+  83   1              tmack();
+  84   1              tmstp();
+  85   1              
+  86   1              tmst();
+  87   1              tmwbyte(0xc0);
+  88   1              tmack();
+  89   1              for( i = 0; i< 4; i++)
+  90   1              {
+  91   2                      tmwbyte(da[i]); 
+  92   2                      tmack();
+  93   2              }
+  94   1              tmstp();
+  95   1              
+  96   1              tmst();
+  97   1              tmwbyte(0x88); //0x88 - 0x8f °µ - ÁÁ
+  98   1              tmack();
+  99   1              tmstp();
+ 100   1      }
+ 101          
+ 102          void itinit1(void)
+ 103          {
+ 104   1              TMOD = 0x09;
+ 105   1              TL0 = 0x0;
+ 106   1              TH0  = 0x0;
+ 107   1      //      ET0 = 1;
+ 108   1      //      EA = 1;
+ 109   1              TR0 = 1;
+ 110   1              
+ 111   1              
+ 112   1      }
+ 113          
+ 114          int main(void)
+ 115          {
+ 116   1              unsigned long int ss = 0;
+C51 COMPILER V9.60.0.0   MAIN                                                              02/03/2023 21:32:16 PAGE 3   
+
+ 117   1              P0 = 0;
+ 118   1              tri = 0;
+ 119   1      //      ssss = 0;
+ 120   1              itinit1();
+ 121   1              while(1)
+ 122   1              {
+ 123   2                      
+ 124   2                      TL0 = 0x0;
+ 125   2                      TH0  = 0x0;
+ 126   2                      tri = 1;
+ 127   2                      delay(17);
+ 128   2                      tri = 0;
+ 129   2                      delay(5000);
+ 130   2                      ss = TL0;
+ 131   2                      ss |= TH0<<8;
+ 132   2                      ss = (ss*17)/ 1000 ; //   ss/340 /1000000
+ 133   2                      P0 = sduan[ss%10];
+ 134   2                      da[3] = smgd[ss%10];
+ 135   2                      da[2] = smgd[(ss/10)%10];
+ 136   2                      da[1] = smgd[(ss/100)%10];
+ 137   2                      da[0] = smgd[(ss/1000)%10];
+ 138   2                      smgw();
+ 139   2                      delay(5000);
+ 140   2              }
+ 141   1              
+ 142   1              
+ 143   1      }
+ 144          
+ 145          //void keyintr(void) interrupt 1
+ 146          //{
+ 147          //      time ++;
+ 148          //      TL0 = 0x18;
+ 149          //      TH0  = 0xfc;
+ 150          //      if(time == 1000)
+ 151          //              time = 0,key = ~key,tt++;
+ 152          //      
+ 153          //}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    508    ----
+   CONSTANT SIZE    =     28    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
